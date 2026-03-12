@@ -1,0 +1,139 @@
+{
+  "project": "example/uart",
+  "files": [
+    "example/uart/UART_RXer.v",
+    "example/uart/UART_TXer.v",
+    "example/uart/cmd_pro.v",
+    "example/uart/UART_top.v"
+  ],
+  "review_category": "all",
+  "current_stage": "COMPLETED",
+  "completed_stages": [
+    "STAGE_1",
+    "STAGE_2",
+    "STAGE_3",
+    "STAGE_4_1",
+    "STAGE_4_2",
+    "STAGE_4_3",
+    "STAGE_4_4",
+    "STAGE_4_5",
+    "STAGE_4_6",
+    "STAGE_4_7",
+    "STAGE_4_8"
+  ],
+  "statistics": {
+    "total_checks": 45,
+    "completed_checks": 45,
+    "passed": 28,
+    "failed": 17,
+    "warnings": 2,
+    "pass_rate": 62.2
+  },
+  "stage_statistics": {
+    "STAGE_1": {
+      "name": "文件头审查",
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "warnings": 0
+    },
+    "STAGE_2": {
+      "name": "信号及模块命名规则",
+      "total": 11,
+      "passed": 9,
+      "failed": 2,
+      "warnings": 1
+    },
+    "STAGE_3": {
+      "name": "排版规则审查",
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "warnings": 0
+    },
+    "STAGE_4_1": {
+      "name": "模拟与时钟设计",
+      "total": 2,
+      "passed": 2,
+      "failed": 0,
+      "warnings": 0
+    },
+    "STAGE_4_2": {
+      "name": "状态机与复位设计",
+      "total": 12,
+      "passed": 4,
+      "failed": 8,
+      "warnings": 0
+    },
+    "STAGE_4_3": {
+      "name": "变量与赋值检查",
+      "total": 3,
+      "passed": 3,
+      "failed": 0,
+      "warnings": 0
+    },
+    "STAGE_4_4": {
+      "name": "Case语句检查",
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "warnings": 0
+    },
+    "STAGE_4_5": {
+      "name": "时钟设计检查",
+      "total": 3,
+      "passed": 3,
+      "failed": 0,
+      "warnings": 0
+    },
+    "STAGE_4_6": {
+      "name": "逻辑运算检查",
+      "total": 6,
+      "passed": 5,
+      "failed": 1,
+      "warnings": 0
+    },
+    "STAGE_4_7": {
+      "name": "变量声明检查",
+      "total": 2,
+      "passed": 2,
+      "failed": 0,
+      "warnings": 0
+    },
+    "STAGE_4_8": {
+      "name": "循环与条件检查",
+      "total": 3,
+      "passed": 3,
+      "failed": 0,
+      "warnings": 0
+    }
+  },
+  "critical_issues": [
+    {
+      "check_id": 1,
+      "description": "所有文件缺少标准文件头",
+      "severity": "R",
+      "files": ["UART_RXer.v", "UART_TXer.v", "cmd_pro.v", "UART_top.v"]
+    },
+    {
+      "check_id": 16,
+      "description": "状态机使用数字字面量定义，未使用localparam",
+      "severity": "R",
+      "files": ["UART_RXer.v", "UART_TXer.v", "cmd_pro.v"]
+    },
+    {
+      "check_id": 19,
+      "description": "Line 31 存在语法错误：en_data_out;<=0;",
+      "severity": "R",
+      "files": ["UART_RXer.v", "UART_TXer.v"]
+    },
+    {
+      "check_id": 44,
+      "description": "状态机使用单段式写法，应改为两段式",
+      "severity": "R",
+      "files": ["UART_RXer.v", "UART_TXer.v", "cmd_pro.v"]
+    }
+  ],
+  "review_date": "2025-02-27",
+  "standard_version": "Verilog_RTL_Coding_Standards-v1.4.3"
+}

@@ -1,0 +1,84 @@
+{
+  "review_info": {
+    "review_time": "2026-02-11",
+    "review_scope": "example/c906/common/rtl/*.v",
+    "review_category": "naming",
+    "standard": "Verilog_RTL_Coding_Standards-v1.4.3",
+    "is_partial_review": true,
+    "partial_review_type": "命名规则"
+  },
+  "files_reviewed": [
+    "BUFGCE.v",
+    "sync_level2level.v"
+  ],
+  "summary": {
+    "total_items": 11,
+    "passed": 4,
+    "failed": 0,
+    "warning": 1,
+    "not_applicable": 5
+  },
+  "key_findings": {
+    "pass": [
+      "多bit总线定义全部使用降序 [HIGH:LOW] 格式，完全符合规范要求",
+      "所有标识符只包含字母、数字和下划线",
+      "所有标识符均为字母开头",
+      "所有宏定义均使用大写"
+    ],
+    "warning": [
+      "命名风格不统一：BUFGCE使用全大写，sync_level2level使用全小写加下划线"
+    ],
+    "fail": []
+  },
+  "stage_2_naming": {
+    "item_2": {
+      "status": "warning",
+      "description": "BUFGCE模块名未使用下划线分隔不同含义段"
+    },
+    "item_3": {
+      "status": "pass",
+      "description": "所有标识符只包含字母、数字和下划线"
+    },
+    "item_4": {
+      "status": "pass",
+      "description": "所有标识符均为字母开头"
+    },
+    "item_5": {
+      "status": "warning",
+      "description": "命名风格不统一（标准IP与用户代码风格差异）"
+    },
+    "item_6": {
+      "status": "pass",
+      "description": "所有多bit总线定义均使用降序 [HIGH:LOW] 格式，符合规范要求"
+    },
+    "item_7": {
+      "status": "pass",
+      "description": "所有宏定义均使用大写"
+    },
+    "item_8": {
+      "status": "not_applicable",
+      "description": "代码中无模块例化"
+    },
+    "item_9": {
+      "status": "not_applicable",
+      "description": "代码中无模块例化"
+    },
+    "item_10": {
+      "status": "not_applicable",
+      "description": "代码中无模块例化"
+    },
+    "item_11": {
+      "status": "not_applicable",
+      "description": "代码中无模块例化"
+    },
+    "item_12": {
+      "status": "not_applicable",
+      "description": "代码中无模块例化"
+    }
+  },
+  "output_files": {
+    "checklist_filled": "output/checklist_filled.md",
+    "stage_2_naming_report": "output/reports/stage_2_naming.md",
+    "final_summary": "output/final_summary.md"
+  }
+}

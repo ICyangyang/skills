@@ -1,0 +1,119 @@
+{
+  "version": "1.0",
+  "description": "Verilog代码修复规则库 - 定义每种问题的修复方式",
+  "categories": {
+    "file_header": {
+      "stage": "STAGE_1",
+      "fixes": [
+        {
+          "id": "FH001",
+          "issue": "缺少文件头",
+          "fix_template": "// Engineer: ${author}\\n// Create Date: ${date}\\n// Description: ${description}\\n// Version: 1.0\\n\\n${content}"
+        },
+        {
+          "id": "FH002",
+          "issue": "缺少 Engineer 字段",
+          "insert_after": "^//[^/]",
+          "replacement": "// Engineer: ${author}\\n"
+        },
+        {
+          "id": "FH003",
+          "issue": "缺少 Create Date 字段",
+          "insert_after": "// Engineer:",
+          "replacement": "\\n// Create Date: ${date}"
+        },
+        {
+          "id": "FH004",
+          "issue": "缺少 Description 字段",
+          "insert_after": "// Create Date:",
+          "replacement": "\\n// Description: ${description}"
+        },
+        {
+          "id": "FH005",
+          "issue": "缺少 Version 字段",
+          "insert_after": "// Description:",
+          "replacement": "\\n// Version: 1.0"
+        }
+      ]
+    },
+    "naming": {
+      "stage": "STAGE_2",
+      "fixes": [
+        {
+          "id": "NM001",
+          "issue": "信号名使用单字母",
+          "pattern": "\\b(d|q|in|out)\\b",
+          "replacement_map": {
+            "d": "data_in",
+            "q": "data_out",
+            "in": "data_in",
+            "out": "data_out"
+          }
+        },
+        {
+          "id": "NM002",
+          "issue": "模块名大小写混用",
+          "pattern": "module\\s+([A-Z][a-zA-Z0-9_]*\\w*)",
+          "replacement": "module \\1_to_snake_case"
+        }
+      ]
+    },
+    "format": {
+      "stage": "STAGE_3",
+      "fixes": [
+        {
+          "id": "FM001",
+          "issue": "tab缩进而非空格",
+          "pattern": "^\\t+",
+          "replacement": "    "
+        },
+        {
+          "id": "FM002",
+          "issue": "if 括号外缺少空格",
+          "pattern": "if\\(",
+          "replacement": "if ("
+        },
+        {
+          "id": "FM003",
+          "issue": "begin 前缺少空格",
+          "pattern": "\\)begin",
+          "replacement": ") begin"
+        }
+      ]
+    },
+    "design": {
+      "stage": "STAGE_4",
+      "fixes": [
+        {
+          "id": "DS001",
+          "issue": "时序逻辑使用阻塞赋值",
+          "severity": "error",
+          "warning": "时序逻辑必须使用非阻塞赋值 <="
+        },
+        {
+          "id": "DS002",
+          "issue": "组合逻辑使用非阻塞赋值",
+          "severity": "error",
+          "warning": "组合逻辑必须使用阻塞赋值 ="
+        },
+        {
+          "id": "DS003",
+          "issue": "if-else 不完整导致锁存器",
+          "severity": "warning",
+          "warning": "不完整的if-else会产生锁存器，请检查是否需要else分支"
+        },
+        {
+          "id": "DS004",
+          "issue": "case 语句缺少 default",
+          "severity": "warning",
+          "warning": "case语句缺少default分支，建议添加以避免锁存器"
+        }
+      ]
+    }
+  },
+  "common_variables": {
+    "author": "ICyangyang",
+    "date": "2026-03-12",
+    "description": "Auto-generated module"
+  }
+}

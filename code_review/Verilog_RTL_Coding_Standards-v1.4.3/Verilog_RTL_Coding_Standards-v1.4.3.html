@@ -1,0 +1,1675 @@
+<!DOCTYPE html><html><head>
+      <title>Verilog_RTL_Coding_Standards-v1.4.3</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:////home/icyangyang/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.8.20/crossnote/dependencies/katex/katex.min.css">
+      
+      
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. --><script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script></head><body for="html-export">
+    
+    
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="verilog-rtl代码规范">Verilog RTL代码规范 </h1>
+<h2 id="第一章-总则">第一章 总则 </h2>
+<h3 id="第1条-目的">第1条 目的 </h3>
+<ol>
+<li>对Verilog RTL coding style进行规范。这些规范覆盖了代码的格式、端口和信号命名、一些设计技巧等等。由于篇幅的限制，一些常识性或者普遍性的规范（如Verilog本身语法要求的规范）并不会在本文中列出。</li>
+<li>针对项目中经常遇到的代码问题总结经验，给出规则和建议，以提升代码的质量（避免低层次bug）、提高可重用性和可维护性，并且有利于代码review。</li>
+<li>统一团队代码风格，让同事交流合作更顺畅、关系更融洽。</li>
+</ol>
+<h3 id="第2条-适用范围">第2条 适用范围 </h3>
+<ol>
+<li>IC逻辑设计工程师。</li>
+</ol>
+<h3 id="第3条-名词定义">第3条 名词定义 </h3>
+<ol>
+<li>RTL：Register Transfer Level(寄存器传输级)，是一种描述数字电路行为的抽象层次。</li>
+</ol>
+<h2 id="第二章-代码规范">第二章 代码规范 </h2>
+<h3 id="第4条-代码规则级别">第4条 代码规则级别 </h3>
+<ol>
+<li>为了区别不同规则的重要程度，定义两类分级（Level）：[规则]和[建议]。<br>
+a) [规则] (Rule，缩写R): 如果没有特殊情况，必须遵守的规范。如果不加以特别备注，本文内所有描述的缺省分级为[R]。<br>
+b) [建议] (Suggestion，缩写S): 不需要强制执行的规范，但是负责任的设计人员还是会遵守，本文每项规范分级为该等级的，在描述后加[S]表示。</li>
+</ol>
+<h3 id="第5条-代码格式规范">第5条 代码格式规范 </h3>
+<ol>
+<li>文件头。<br>
+a) 所有Verilog代码都需要有文件头。<br>
+b) Verilog代码的文件头需要包括文件名，作者，其创建时间与概要描述等信息。每个模块的开头使用规范的文件头能够帮助后续开发人员了解该文件的作用，方便联系该文件的作者进行复用与维护。一个示例的文件头内容如下所示：</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog 文件头内容" class="language-verilog verilog"><code><span class="token comment">//图 1 文件头内容</span>
+<span class="token comment">//--------------------------------------------------------------</span>
+<span class="token comment">// (C) COPYRIGHT 2020-2023 Sophgo Technologies Inc.</span>
+<span class="token comment">// ALL RIGHTS RESERVED</span>
+<span class="token comment">//</span>
+<span class="token comment">// Filename : &lt;file_name&gt;.v</span>
+<span class="token comment">// Author   : &lt;author_name&gt; (name@sophgo.com)</span>
+<span class="token comment">// Created  : &lt;time&gt;</span>
+<span class="token comment">// Description:</span>
+<span class="token comment">//   1) ...</span>
+<span class="token comment">//   2) ...</span>
+<span class="token comment">//</span>
+<span class="token comment">// History :</span>
+<span class="token comment">//   2022.02.08, &lt;author1&gt;, initial version</span>
+<span class="token comment">//   2022.04.07, &lt;author2&gt;, optimization for block ...</span>
+<span class="token comment">//--------------------------------------------------------------</span>
+</code></pre><p>c) Description部分可以概要描述模块的功能和设计思路、与外部连接的示意以及使用模块的注意事项等内容。History部分描述历史修改信息，列出修改的时间、作者和主要修改内容。<br>
+d) 文件头必须包含作者名。</p>
+<h3 id="第6条-命名规范">第6条 命名规范 </h3>
+<ol>
+<li>
+<p>文件和模块命名。<br>
+a) 一个.v文件包含最多一个module, 并且文件名与module name同名。[S]<br>
+b) module命名都采用小写，但 Vendor IP的module命名可以保留大写。[S]</p>
+</li>
+<li>
+<p>信号命名。<br>
+a) 要非常重视信号的命名，信号取完名字后，代码也就基本写完了。<br>
+b) 信号命名要直观、简洁、有含义。使用有具体含义的名称便于阅读。<br>
+c) 命名中不同含义可分段，每一小段之间使用下划线“_”来分隔。<br>
+d) 信号名称不宜过长，不超过30字符。[S]<br>
+e) 命名中只允许出现字母数字和下划线。<br>
+f) 命名必需字母开头。<br>
+g) 模块端口、信号的所有字母小写。[S]<br>
+h) 信号命名中不使用任何保留字。<br>
+i) 命名不能只通过大小写来区分。<br>
+j) 定义多bit总线使用降序[N-1:0]。<br>
+k) 信号命名建议采用缩写方式。[S]<br>
+常用的信号缩写见下表,表 1 信号缩写定义表：</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>全称</th>
+<th>缩写</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>acknowledge</td>
+<td>ack</td>
+<td>应答</td>
+</tr>
+<tr>
+<td>address</td>
+<td>addr</td>
+<td>地址</td>
+</tr>
+<tr>
+<td>arbiter</td>
+<td>arb</td>
+<td>仲裁</td>
+</tr>
+<tr>
+<td>check</td>
+<td>chk</td>
+<td>校验，如CRC校验</td>
+</tr>
+<tr>
+<td>clock</td>
+<td>clk</td>
+<td>时钟</td>
+</tr>
+<tr>
+<td>clear</td>
+<td>clr</td>
+<td>清除</td>
+</tr>
+<tr>
+<td>configuration</td>
+<td>cfg</td>
+<td>配置</td>
+</tr>
+<tr>
+<td>control</td>
+<td>ctrl</td>
+<td>控制</td>
+</tr>
+<tr>
+<td>count</td>
+<td>cnt</td>
+<td>计数</td>
+</tr>
+<tr>
+<td>current</td>
+<td>cur</td>
+<td>当前的</td>
+</tr>
+<tr>
+<td>data in</td>
+<td>din</td>
+<td>数据输入</td>
+</tr>
+<tr>
+<td>data out</td>
+<td>dout</td>
+<td>数据输出</td>
+</tr>
+<tr>
+<td>write data</td>
+<td>wdat</td>
+<td>写数据</td>
+</tr>
+<tr>
+<td>read data</td>
+<td>rdat</td>
+<td>读数据</td>
+</tr>
+<tr>
+<td>decode</td>
+<td>dec</td>
+<td>译码</td>
+</tr>
+<tr>
+<td>delay</td>
+<td>dly</td>
+<td>延迟</td>
+</tr>
+<tr>
+<td>disable</td>
+<td>dis</td>
+<td>不使能</td>
+</tr>
+<tr>
+<td>error</td>
+<td>err</td>
+<td>错误（指示）</td>
+</tr>
+<tr>
+<td>enable</td>
+<td>en</td>
+<td>使能</td>
+</tr>
+<tr>
+<td>frame</td>
+<td>frm</td>
+<td>帧</td>
+</tr>
+<tr>
+<td>generate</td>
+<td>gen</td>
+<td>生成，如CRC生成</td>
+</tr>
+<tr>
+<td>grant</td>
+<td>gnt</td>
+<td>申请通过</td>
+</tr>
+<tr>
+<td>increase</td>
+<td>inc</td>
+<td>加一</td>
+</tr>
+<tr>
+<td>interrupt</td>
+<td>intr</td>
+<td>中断</td>
+</tr>
+<tr>
+<td>length</td>
+<td>len</td>
+<td>（帧、包）长</td>
+</tr>
+<tr>
+<td>memory</td>
+<td>mem</td>
+<td>内存、存储</td>
+</tr>
+<tr>
+<td>output</td>
+<td>out(o)</td>
+<td>输出</td>
+</tr>
+<tr>
+<td>priority</td>
+<td>pri</td>
+<td>优先级</td>
+</tr>
+<tr>
+<td>pointer</td>
+<td>ptr</td>
+<td>指针</td>
+</tr>
+<tr>
+<td>rd enable</td>
+<td>ren</td>
+<td>读使能</td>
+</tr>
+<tr>
+<td>read</td>
+<td>rd</td>
+<td>读（操作）</td>
+</tr>
+<tr>
+<td>read enable</td>
+<td>ren (rden)</td>
+<td>读操作</td>
+</tr>
+<tr>
+<td>ready</td>
+<td>rdy</td>
+<td>应答信号或准备好</td>
+</tr>
+<tr>
+<td>receive</td>
+<td>rx</td>
+<td>接收</td>
+</tr>
+<tr>
+<td>register</td>
+<td>reg</td>
+<td>寄存器</td>
+</tr>
+<tr>
+<td>request</td>
+<td>req</td>
+<td>请求</td>
+</tr>
+<tr>
+<td>reset</td>
+<td>rst</td>
+<td>复位</td>
+</tr>
+<tr>
+<td>segment</td>
+<td>seg</td>
+<td>片段</td>
+</tr>
+<tr>
+<td>source</td>
+<td>src</td>
+<td>源（端口）</td>
+</tr>
+<tr>
+<td>timer</td>
+<td>tmr</td>
+<td>定时器</td>
+</tr>
+<tr>
+<td>temporary</td>
+<td>tmp</td>
+<td>临时</td>
+</tr>
+<tr>
+<td>transmit</td>
+<td>tx</td>
+<td>发送</td>
+</tr>
+<tr>
+<td>valid</td>
+<td>vld</td>
+<td>有效信号</td>
+</tr>
+<tr>
+<td>write</td>
+<td>wr</td>
+<td>写操作</td>
+</tr>
+<tr>
+<td>write enable</td>
+<td>wen (wren)</td>
+<td>写使能</td>
+</tr>
+<tr>
+<td>left</td>
+<td>lft</td>
+<td>左侧</td>
+</tr>
+<tr>
+<td>right</td>
+<td>rht</td>
+<td>右侧</td>
+</tr>
+<tr>
+<td>top</td>
+<td>top</td>
+<td>上方</td>
+</tr>
+<tr>
+<td>bottm</td>
+<td>bot</td>
+<td>下方</td>
+</tr>
+</tbody>
+</table>
+<p>l) start、end信号不用缩写。start和end一般是pulse信号，而不是电平信号。<br>
+m) 特定作用的信号添加后缀表明其作用。[S]<br>
+常用后缀命名方式见下表,表 2 常用信号后缀表。</p>
+<table>
+<thead>
+<tr>
+<th>全称</th>
+<th>后缀</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>active low</td>
+<td>_n</td>
+<td>低有效</td>
+</tr>
+<tr>
+<td>clock</td>
+<td>_clk</td>
+<td>时钟信号</td>
+</tr>
+<tr>
+<td>enable</td>
+<td>_en</td>
+<td>开启使能</td>
+</tr>
+<tr>
+<td>disable</td>
+<td>_dis</td>
+<td>关闭功能</td>
+</tr>
+<tr>
+<td>select</td>
+<td>_sel</td>
+<td>选择</td>
+</tr>
+<tr>
+<td>chip enable</td>
+<td>_ce</td>
+<td>片选</td>
+</tr>
+<tr>
+<td>flag</td>
+<td>_flg</td>
+<td>标志位</td>
+</tr>
+<tr>
+<td>delay</td>
+<td>_dly</td>
+<td>延迟</td>
+</tr>
+<tr>
+<td>receive</td>
+<td>_rx</td>
+<td>接收</td>
+</tr>
+<tr>
+<td>transmit</td>
+<td>_tx</td>
+<td>发送</td>
+</tr>
+</tbody>
+</table>
+<p>n) 打拍的寄存一般加_r后缀。为了说明某个寄存器xx的前一拍，可以用xx_d表示，这里_d表示寄存器的d端。</p>
+<ol start="3">
+<li>宏和参数命名。<br>
+a) 宏定义所有字母大写, 如下示例：</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 2宏定义示例图</span>
+<span class="token constant">`define</span> TSMC16LL
+<span class="token constant">`define</span> USE LIB CELL
+<span class="token constant">`define</span> CORE NUM <span class="token number">10</span>
+</code></pre><p>b) 有几个define是仿真常用的，只供仿真，综合不能打开：</p>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token constant">`define</span> SIMULATION<span class="token operator">--</span> 仿真专用开关
+<span class="token constant">`define</span> EMULATOR<span class="token operator">--</span> 帕拉丁仿真专用
+<span class="token constant">`define</span> BEHAVIORAL<span class="token operator">--</span> 行为级模型
+<span class="token constant">`define</span> FAST_SIM<span class="token operator">--</span> 快速仿真模型
+</code></pre><p>c) 宏允许带参数，参数可以小写，要求所有参数都要小括号括起来。如下示例：</p>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 3宏参数写法示意</span>
+<span class="token constant">`define</span> <span class="token function">IDX</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token punctuation">(</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span>
+<span class="token constant">`define</span> <span class="token function">BYTE_IDX</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token punctuation">(</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre><p>d) 参数定义中所有字母大写。如下示例：</p>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 4 参数定义示意</span>
+<span class="token keyword keyword-parameter">parameter</span> DAT WIDTH <span class="token operator">=</span><span class="token number">32</span> <span class="token punctuation">;</span>
+<span class="token keyword keyword-parameter">parameter</span> ADR WIDTH <span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">;</span>
+</code></pre><p>e) 端口信号为结构体时，需要区分数据类型名称和端口名称：</p>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token keyword keyword-input">input</span><span class="token operator">/</span><span class="token keyword keyword-output">output</span>  pkg_name<span class="token punctuation">:</span><span class="token punctuation">:</span>struct_name  io_name
+</code></pre><p>在以上的显式定义中，io_name和struct_name要进行区分，否则即使回归可以正常pass，但在进行综合时会导致编译失败。</p>
+<h3 id="第7条-模块定义和例化">第7条 模块定义和例化 </h3>
+<ol>
+<li>模块的声明与书写采用统一的格式便于项目内部成员的理解与维护。建议采用port中定义input/output的方式。[S]<br>
+a) 模块声明示例如下，采用Verilog-2001语法，在port声明中定义input/output/inout，如果是寄存器输出output，也在port声明中定义。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 5 模块声明接口示意</span>
+<span class="token keyword keyword-module">module</span> module_example #<span class="token punctuation">(</span>
+    <span class="token keyword keyword-parameter">parameter</span> DATW <span class="token operator">=</span> <span class="token number">32</span><span class="token punctuation">,</span>  <span class="token comment">// data width</span>
+    <span class="token keyword keyword-parameter">parameter</span> ADRW <span class="token operator">=</span> <span class="token number">20</span>   <span class="token comment">// address width</span>
+<span class="token punctuation">)</span> <span class="token punctuation">(</span>
+    <span class="token keyword keyword-input">input</span>            clk<span class="token punctuation">,</span>     <span class="token comment">// clock 500MHz</span>
+    <span class="token keyword keyword-input">input</span>            rst_n<span class="token punctuation">,</span>   <span class="token comment">// reset active low @ clk domain</span>
+    <span class="token keyword keyword-input">input</span> <span class="token punctuation">[</span>DATW<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> xx2yy_din<span class="token punctuation">,</span>    <span class="token comment">// data in from ..</span>
+    <span class="token keyword keyword-input">input</span> <span class="token punctuation">[</span>ADRW<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> xx2yy_addr<span class="token punctuation">,</span>   <span class="token comment">// @ address</span>
+    <span class="token keyword keyword-output">output</span> <span class="token keyword keyword-reg">reg</span> <span class="token punctuation">[</span>DATW<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> xx2yy_dout0<span class="token punctuation">,</span>  <span class="token comment">// data out to yy</span>
+    <span class="token keyword keyword-output">output</span> <span class="token keyword keyword-reg">reg</span> <span class="token punctuation">[</span>DATW<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> xx2zz_dout1  <span class="token comment">// data out to zz</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-localparam">localparam</span> LCDW <span class="token operator">=</span> <span class="token number">32</span><span class="token punctuation">;</span>  <span class="token comment">// Local data width</span>
+</code></pre><ol start="2">
+<li>将常量定义成参数 (parameter)，以提升可移植性。[S]</li>
+<li>可被上层传参修改的parameter，在module定义时声明。</li>
+<li>内部使用的参数在module port声明后，用localparam声明。[S]</li>
+<li>模块定义端口时可以按照端口方向 (如 input, output ) 分组定义或者按照功能和用途分组定义。[S]</li>
+<li>模块的端口列表上添加层次标记字符做前缀，如top_、pcie_。[S]</li>
+<li>例化名要与原模块名称一样加前缀u_表示例化，如果有多个，加前缀u0_、u1_等。[S]</li>
+<li>例化模块时，模块的端口信号的命名和连接信号的命名不变。[S]</li>
+<li>使用显示端口映射，禁止使用位置端口映射。如下示例采用显示端口映射：</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 6 模块例化端口映射示意</span>
+module_xx #<span class="token punctuation">(</span>
+    <span class="token punctuation">.</span>DATW <span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span><span class="token punctuation">,</span>  <span class="token comment">// data width</span>
+    <span class="token punctuation">.</span>ADRW <span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>   <span class="token comment">// address width</span>
+<span class="token punctuation">)</span> u_module_xx <span class="token punctuation">(</span>
+    <span class="token punctuation">.</span>clk     <span class="token punctuation">(</span>clk<span class="token punctuation">)</span><span class="token punctuation">,</span>        <span class="token comment">// clock 500MHz</span>
+    <span class="token punctuation">.</span>rst_n   <span class="token punctuation">(</span>rst_n<span class="token punctuation">)</span><span class="token punctuation">,</span>      <span class="token comment">// reset active low @ clk domain</span>
+    <span class="token punctuation">.</span>xx2yy_din  <span class="token punctuation">(</span>xx2yy_din<span class="token punctuation">)</span><span class="token punctuation">,</span>   <span class="token comment">// data in from ..</span>
+    <span class="token punctuation">.</span>xx2yy_addr <span class="token punctuation">(</span>xx2yy_addr<span class="token punctuation">)</span><span class="token punctuation">,</span>  <span class="token comment">// address</span>
+    <span class="token punctuation">.</span>xx2yy_dout <span class="token punctuation">(</span>xx2yy_dout<span class="token punctuation">)</span>   <span class="token comment">// data out to yy</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><ol start="10">
+<li>例化模块时不能缺少端口。<br>
+a) input端口必须连接，output端口如有不连的也需要例化时显示列出，括号内空着。如下示例，xx2yy_dout1和xx2yy_dout2是输出，尽管没有连接，也需要显示列出。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 7 模块例化无连接接口示例</span>
+module_xx u_module_xx <span class="token punctuation">(</span>
+    <span class="token punctuation">.</span>clk     <span class="token punctuation">(</span>clk<span class="token punctuation">)</span><span class="token punctuation">,</span>        <span class="token comment">// clock 500MHz</span>
+    <span class="token punctuation">.</span>rst_n   <span class="token punctuation">(</span>rst_n<span class="token punctuation">)</span><span class="token punctuation">,</span>      <span class="token comment">// reset active low @ clk domain</span>
+    <span class="token punctuation">.</span>xx2yy_din  <span class="token punctuation">(</span>xx2yy_din<span class="token punctuation">)</span><span class="token punctuation">,</span>   <span class="token comment">// data in from ..</span>
+    <span class="token punctuation">.</span>xx2yy_addr <span class="token punctuation">(</span>xx2yy_addr<span class="token punctuation">)</span><span class="token punctuation">,</span>  <span class="token comment">// address</span>
+    <span class="token punctuation">.</span>xx2yy_dout0 <span class="token punctuation">(</span>xx2yy_dout<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// data0 out to yy</span>
+    <span class="token punctuation">.</span>xx2yy_dout1 <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// data1 out to yy</span>
+    <span class="token punctuation">.</span>xx2yy_dout2 <span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment">// data2 out to yy</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><ol start="11">
+<li>不要在例化模块时进行逻辑操作。如下示例，例化时存在逻辑操作，不允许。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 8 模块例化进行逻辑操作示意</span>
+module_example u_module_example <span class="token punctuation">(</span>
+    <span class="token punctuation">.</span>clk     <span class="token punctuation">(</span>clk<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>rst_n   <span class="token punctuation">(</span>rst_n<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>eg_ctrl <span class="token punctuation">(</span>eg_ctrl <span class="token operator">&amp;</span> eg_en<span class="token punctuation">)</span><span class="token punctuation">,</span>  <span class="token comment">// 注意：此处为组合逻辑表达式</span>
+    <span class="token punctuation">.</span>eg_addr <span class="token punctuation">(</span>eg_addr<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>eg_dout <span class="token punctuation">(</span>eg_dout<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><ol start="12">
+<li>例化单独harden的模块或者IP时，不能传入parameter。<br>
+a) 单独harden的IP，外部例化传入parameter可能与内部parameter不一致导致出错。</li>
+<li>例化多模块复用的IP时，显式传入所有parameter。[S]<br>
+a) 当例化的IP在多个模块被使用时，即使想用parameter的默认值，也需要对该parameter默认值进行显式的例化，避免后续IP默认值修改导致出错。</li>
+</ol>
+<h3 id="第8条-注释规范">第8条 注释规范 </h3>
+<ol>
+<li>为了增加代码的可读性，要及时进行注释。</li>
+<li>Module定义中声明的parameter和port要加注释。[S]</li>
+<li>对于重要变量的声明，必须要有注释。</li>
+<li>对端口声明中的信号进行注释，最好在同一行，如果不在同一行，需在代码上方注释。[S]</li>
+<li>多行注释请使用 <code>//</code> 而非 <code>/*  */</code>。[S]<br>
+a) 先删除 <code>/*</code> 后会导致后续不需要注释的行也被标记为注释，可能会引起不必要的错误。</li>
+<li>例化的模块、状态机的状态，要有功能性的注释描述。[S]</li>
+<li>所有综合相关的指令必须在生效的地方进行记录，并且注释说明使用的原因、使用的工具。[S]</li>
+<li>编译器选项例如 <code> `ifdef</code>, <code> `else</code>  <code> `endif</code> 必须有注释说明在哪里使用、并解释这个指令的用法。[S]</li>
+</ol>
+<h3 id="第9条-排版规范">第9条 排版规范 </h3>
+<ol>
+<li>缩进使用 Space（空格）而非Tab（制表符）。<br>
+a) 不同的编辑器会将Tab解释为不同的宽度，导致缩进不统一，较长的语句通过缩进进行分层次将会增加代码的可读性，建议使用4个 Space 作为缩进。</li>
+<li>行的长度保持每行小于或等于 120 个字符。[S]</li>
+<li>信号的定义要对齐。[S]</li>
+<li>模块例化的信号要对齐。[S]</li>
+<li>每个.v文件代码行数控制在2000行以内为宜。[S]</li>
+</ol>
+<h2 id="第二章-电路设计规范">第二章 电路设计规范 </h2>
+<h3 id="第1条-设计结构规范">第1条 设计结构规范 </h3>
+<ol>
+<li>时序逻辑always块中的寄存器，采用非阻塞赋值"&lt;="。</li>
+<li>组合逻辑always块中采用阻塞赋值"="。</li>
+<li>在同一always块语句中不允许同时出现阻塞赋值和非阻塞赋值。</li>
+<li>同一个寄存器不能在多个always块中被赋值。</li>
+<li>无关的信号不要在同一个always块里面赋值。<strong>[S]</strong><br>
+a)  如下面示例，tmp_r1与dat_r1没必要放在一个always块。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 9 always块错误写法示例</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> rst_n<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token operator">~</span>rst_n<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        dat_r1 <span class="token operator">&lt;=</span> <span class="token number">32'd0</span><span class="token punctuation">;</span>
+        tmp_r1 <span class="token operator">&lt;=</span> <span class="token number">10'd0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span> <span class="token keyword keyword-else">else</span> <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>cond3<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>cond1<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+            dat_r1 <span class="token operator">&lt;=</span> logic1<span class="token punctuation">;</span>
+        <span class="token keyword keyword-end">end</span>
+        <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>cond2<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+            tmp_r1 <span class="token operator">&lt;=</span> logic2<span class="token punctuation">;</span>
+        <span class="token keyword keyword-end">end</span>
+    <span class="token keyword keyword-end">end</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><ol start="6">
+<li>在时序逻辑中不能对同一变量覆盖赋值。<br>
+a)  如下面示例，if采用覆盖式赋值，应该用else if嵌套语句实现。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 10 always块错误写法示意</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> rst_n<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token operator">~</span>rst<span class="token punctuation">)</span> out <span class="token operator">&lt;=</span> <span class="token number">32'd0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>sel0<span class="token punctuation">)</span> out <span class="token operator">&lt;=</span> in0<span class="token punctuation">;</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>sel1<span class="token punctuation">)</span> out <span class="token operator">&lt;=</span> in1<span class="token punctuation">;</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>sel2<span class="token punctuation">)</span> out <span class="token operator">&lt;=</span> in2<span class="token punctuation">;</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><ol start="7">
+<li>组合逻辑always块敏感列表要列全。<br>
+a)  可以用<code>always @(*)</code>方式避免遗漏**[S]**。</li>
+<li>避免出现组合逻辑反馈回路。<br>
+<img src="image.png" alt="图 11 组合逻辑loop回路示例"></li>
+</ol>
+<blockquote>
+<p>图 11 组合逻辑loop回路示例</p>
+</blockquote>
+<p>a)  如果确实需要有意设计成组合逻辑loop，需要在SPEC中详细说明。例如有一个特例是process_monitor中存在回路，用于测试。确实需要loop时，代码实现时用SIMULATION的宏，里面加上延时，并仅用于仿真，防止仿真卡死。<br>
+9)  谨慎使用Latch。<strong>[S]</strong><br>
+a)  如确需要用到，须清楚地分析相关电路的时序以及毛刺带来的影响，并在SPEC中做详细说明。例如在top的IO逻辑中，会用到锁存器，防止TEST来后信号跳变。如下示例为产生latch的常规写法。</p>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 12 产生latch的常规写法</span>
+<span class="token important">always @</span><span class="token punctuation">(</span>test_enable <span class="token keyword keyword-or">or</span> di_bi<span class="token punctuation">)</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>test_enable<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        bi_latch <span class="token operator">=</span> di_bi<span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span>
+</code></pre><ol start="11">
+<li>避免出现输入为固定值的锁存器。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 13 产生固定值锁存器写法示意</span>
+<span class="token important">always @</span><span class="token punctuation">(</span>cond<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>cond<span class="token punctuation">)</span> test_d <span class="token operator">=</span> <span class="token number">1'b1</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><ol start="11">
+<li>组合逻辑always块中避免因if else或case语句不完整造成Latch。<br>
+a)  如下面两种情况会产生Latch：</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 14 产生Latch写法一</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+    <span class="token keyword keyword-case">case</span> <span class="token punctuation">(</span>cond<span class="token punctuation">)</span>
+        <span class="token number">2'b01</span> <span class="token punctuation">:</span> test_d <span class="token operator">=</span> <span class="token number">2'b11</span><span class="token punctuation">;</span>
+        <span class="token number">2'b10</span> <span class="token punctuation">:</span> test_d <span class="token operator">=</span> <span class="token number">2'b10</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-endcase">endcase</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 15 产生Latch写法二</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>cond1<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        test_d <span class="token operator">=</span> data_a<span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span> <span class="token keyword keyword-else">else</span> <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>cond2<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        test_d <span class="token operator">=</span> data_b<span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><pre class="language-text">b)  采用下面4种写法可避免产生Latch：
+</pre>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 16 避免产生Latch写法一</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+    <span class="token keyword keyword-case">case</span> <span class="token punctuation">(</span>cond<span class="token punctuation">)</span>
+        <span class="token number">2'b01</span> <span class="token punctuation">:</span> test_d <span class="token operator">=</span> <span class="token number">2'b11</span><span class="token punctuation">;</span>
+        <span class="token number">2'b10</span> <span class="token punctuation">:</span> test_d <span class="token operator">=</span> <span class="token number">2'b10</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-default">default</span> <span class="token punctuation">:</span> test_d <span class="token operator">=</span> <span class="token number">2'b00</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-endcase">endcase</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 17 避免产生Latch写法二</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+    test_d <span class="token operator">=</span> <span class="token number">2'b00</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-case">case</span> <span class="token punctuation">(</span>cond<span class="token punctuation">)</span>
+        <span class="token number">2'b01</span> <span class="token punctuation">:</span> test_d <span class="token operator">=</span> <span class="token number">2'b11</span><span class="token punctuation">;</span>
+        <span class="token number">2'b10</span> <span class="token punctuation">:</span> test_d <span class="token operator">=</span> <span class="token number">2'b10</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-endcase">endcase</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 18 避免产生Latch写法三</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>cond1<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        test_d <span class="token operator">=</span> data_a<span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span> <span class="token keyword keyword-else">else</span> <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>cond2<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        test_d <span class="token operator">=</span> data_b<span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span> <span class="token keyword keyword-else">else</span> <span class="token keyword keyword-begin">begin</span>
+        test_d <span class="token operator">=</span> <span class="token number">8'd0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 19 避免产生Latch写法四</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+    test_d <span class="token operator">=</span> <span class="token number">8'd0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>cond1<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        test_d <span class="token operator">=</span> data_a<span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span> <span class="token keyword keyword-else">else</span> <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>cond2<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        test_d <span class="token operator">=</span> data_b<span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><ol start="12">
+<li>时序逻辑的always块中尽量采用条件语句赋值。<strong>[S]</strong><br>
+a)  采用条件语句赋值后，便于工具插入clock gate。下面两个示例，左边示例没有用条件赋值，工具不会插入clock gate。右边示例有条件语句赋值，工具可以插入clock gate，以节省功耗。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 20 工具不会插入clock gate写法示意</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> rst_n<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token operator">~</span>rst_n<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        dat_reg <span class="token operator">&lt;=</span> <span class="token number">32'd0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span> <span class="token keyword keyword-else">else</span> <span class="token keyword keyword-begin">begin</span>
+        dat_reg <span class="token operator">&lt;=</span> din<span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 21 工具会插入clock gate写法示意</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> rst_n<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token operator">~</span>rst_n<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        dat_reg <span class="token operator">&lt;=</span> <span class="token number">32'd0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span> <span class="token keyword keyword-else">else</span> <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>din_vld<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        dat_reg <span class="token operator">&lt;=</span> din<span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><ol start="13">
+<li>时序逻辑always块中，没必要在else中自己赋值给自己。<strong>[S]</strong><br>
+a)  下面红框自己给自己赋值可删去。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 22 else 赋值冗余写法示意</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> rst_n<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token operator">~</span>rst_n<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        dat_r1 <span class="token operator">&lt;=</span> <span class="token number">32'd0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span> <span class="token keyword keyword-else">else</span> <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>cond<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        dat_r1 <span class="token operator">&lt;=</span> data_a<span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span> <span class="token keyword keyword-else">else</span> <span class="token keyword keyword-begin">begin</span>          <span class="token comment">//红框</span>
+        dat_r1 <span class="token operator">&lt;=</span> dat_r1<span class="token punctuation">;</span>   <span class="token comment">//红框</span>
+    <span class="token keyword keyword-end">end</span>                     <span class="token comment">//红框</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><ol start="14">
+<li>在顶层集成子模块时，避免出现glue logic。<br>
+a)  Block 单独harden后，如果顶层出现glue logic，不利于后端集成。<br>
+<img src="image-1.png" alt="图 23 glue logic示例"></li>
+<li>例化模块的信号中不能包含表达式。<br>
+a)  下面示例存在"&amp;"逻辑，这种方式可导致Block之间产生glue logic，并且会对仿真debug造成干扰。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 24 例化模块信号中包含表达式错误示例</span>
+module_example u_module_example <span class="token punctuation">(</span>
+    <span class="token punctuation">.</span>clk     <span class="token punctuation">(</span> clk     <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>rst_n   <span class="token punctuation">(</span> rst_n   <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>eg_ctrl <span class="token punctuation">(</span> eg_ctrl <span class="token operator">&amp;</span> eg_en <span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token comment">//红框</span>
+    <span class="token punctuation">.</span>eg_addr <span class="token punctuation">(</span> eg_addr <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>eg_dout <span class="token punctuation">(</span> eg_dout <span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><ol start="16">
+<li>
+<p>模块的输出尽量使用寄存输出。<strong>[S]</strong></p>
+</li>
+<li>
+<p>例化harden的模块或IP时，不能传入parameter。</p>
+</li>
+<li>
+<p>inout双向端口只允许在芯片顶层和IO模块中定义及使用。<strong>[S]</strong></p>
+</li>
+<li>
+<p>芯片内部避免使用三态逻辑和三态buffer。<strong>[S]</strong><br>
+a)  特例：FPGA 的双向IO是可以用三态buffer的。</p>
+</li>
+<li>
+<p>在例化模块时不能出现将"Z"状态赋值到端口中。<br>
+a)  下面示例是不建议的做法：</p>
+</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 25 例化时含有"Z"的不规范写法示例</span>
+bufifo <span class="token function">s2</span><span class="token punctuation">(</span>dout1<span class="token punctuation">,</span> <span class="token number">1'bz</span><span class="token punctuation">,</span> en<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><ol start="21">
+<li>在module中禁止使用task。</li>
+<li>在function中的变量需在function内部进行声明。<br>
+a)  下面示例在module中编写了一个function，out变量是在function外声明的变量，就会在out=in处报错。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 26 Function out错误赋值示例   </span>
+<span class="token keyword keyword-module">module</span> <span class="token function">test_f</span><span class="token punctuation">(</span>in<span class="token punctuation">,</span> out<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-function">function</span> val<span class="token punctuation">;</span>
+    <span class="token keyword keyword-input">input</span> in<span class="token punctuation">;</span>
+    out <span class="token operator">=</span> in<span class="token punctuation">;</span>
+<span class="token keyword keyword-endfunction">endfunction</span>
+
+<span class="token keyword keyword-endmodule">endmodule</span>
+</code></pre><ol start="23">
+<li>function输出函数值的所有bit都要进行赋值。<br>
+a)  下面示例函数值为16bit，计算赋值时只赋给了8个bit，违反规则。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 27 Function输出函数值存在某些bit未赋值示例     </span>
+<span class="token keyword keyword-function">function</span> <span class="token punctuation">[</span><span class="token number">15</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> f_val<span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    f_val<span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> inp<span class="token punctuation">;</span>
+<span class="token keyword keyword-endfunction">endfunction</span>
+</code></pre><pre class="language-text">![图 27 Function输出函数值存在某些bit未赋值示例](media/image19.png)
+图 27 Function输出函数值存在某些bit未赋值示例
+</pre>
+<ol start="24">
+<li>function中的赋值语句需将值完全赋给函数值。<br>
+a)  下面示例图28 function中没有else，条件不完全。图29有else才是合理的。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 28 function条件语句不完全示例   </span>
+<span class="token keyword keyword-function">function</span> func<span class="token punctuation">;</span>
+    <span class="token keyword keyword-input">input</span> sel<span class="token punctuation">;</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>sel<span class="token punctuation">)</span>
+        func <span class="token operator">=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-endfunction">endfunction</span>
+</code></pre><pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 29 function条件语句正确写法示例</span>
+<span class="token keyword keyword-function">function</span> func<span class="token punctuation">;</span>
+    <span class="token keyword keyword-input">input</span> sel<span class="token punctuation">;</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>sel<span class="token punctuation">)</span>
+        func <span class="token operator">=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-else">else</span>
+        func <span class="token operator">=</span> <span class="token number">1'b1</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-endfunction">endfunction</span>    
+</code></pre><ol start="25">
+<li>function中不能使用非阻塞赋值，并应避免出现assign赋值方式。</li>
+<li>在多bit运算中，避免使用逻辑运算符。<br>
+a)  下面示例r为多比特，避免使用逻辑运算符" ! "，可以用 s = (r == 4'd0)或者s = ~(|r)代替。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 30 多比特运算不建议写法示例</span>
+<span class="token keyword keyword-reg">reg</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> r<span class="token punctuation">;</span>
+<span class="token keyword keyword-assign">assign</span> s <span class="token operator">=</span> <span class="token operator">!</span>r<span class="token punctuation">;</span>
+</code></pre><ol start="27">
+<li>避免使用表达式来索引数组的地址。<br>
+a)  下面用idx+1表达式索引array方式要避免，可将idx+1独立赋值给idx_plus，用idx_plus去索引。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 31 数组索引使用表达式错误写法示例</span>
+<span class="token keyword keyword-wire">wire</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> array <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-wire">wire</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> idx<span class="token punctuation">;</span>
+<span class="token keyword keyword-wire">wire</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> mux_d<span class="token punctuation">;</span>
+
+<span class="token keyword keyword-assign">assign</span> mux_d <span class="token operator">=</span> array<span class="token punctuation">[</span>idx <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre><ol start="28">
+<li>避免出现无驱动输出的端口或信号。<strong>[S]</strong></li>
+<li>在模块端口的定义后集中定义所有的内部信号。[S]</li>
+<li>模拟信号连接要避免插入buffer。<br>
+a)  综合以及pd产生的netlist也要check，不能在模拟连线中插入buffer。</li>
+<li>generate块需要显示命名。<br>
+a)  如下面示例generate块显示给出命名，防止不同EDA工具产生的命名不一致，并且有利于仿真debug。如果存在多个generate块并且不对其进行命名，工具自动产生的命名会很相像干扰debug。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">// 图 32 generate块命名示例</span>
+<span class="token keyword keyword-genvar">genvar</span> i<span class="token punctuation">;</span>
+<span class="token keyword keyword-generate">generate</span>
+    <span class="token keyword keyword-for">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token constant">`CORE_NUM</span><span class="token punctuation">;</span> i <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span> <span class="token punctuation">:</span> CORE_GEN
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword keyword-end">end</span>
+<span class="token keyword keyword-endgenerate">endgenerate</span>
+</code></pre><ol start="32">
+<li>单独插入scan的模块顶层输入信号需确保在scan模式下的值可控。以下示例说明。<br>
+a)  图中Top_scan模块为需要独立插入scan的顶层模块，存在一个input信号din，一个output信号dout。为了提高测试覆盖率，需要确保在scan模式下（scan_mode=1），输入给内部的din为可控制的值。<br>
+<img src="image-2.png" alt="图 33 插入scan前input、output信号示例"><br>
+b)  有下面两种实现种方式：下图其中一种，在scan模式下，让din输入给内部的din_inn置为0（或者1）。<br>
+<img src="image-4.png" alt="图 34 scan模式下输入值置为0"><br>
+c)  下图为另一种方式，scan模式下，让output 信号dout给到din_inn，这样可以方便scan测试dout，进一步提高测试覆盖率，所以该方式为最推荐的方式。<br>
+<img src="image-5.png" alt="图 35 scan模式下输入值为output信号回路"><br>
+图 35 scan模式下输入值为output信号回路</li>
+<li>编码逻辑清晰、代码简洁，避免啰嗦。<strong>[S]</strong><br>
+a)  always块中相同的赋值语句，对应的条件尽量合并起来。<br>
+b)  下面两段逻辑功能一样，后边的显然更清晰明了，并有利于提高验证覆盖率。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">// 图 36 逻辑繁冗写法示例   </span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> rst_n<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token operator">~</span>rst_n<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        ctrl <span class="token operator">&lt;=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span> <span class="token keyword keyword-else">else</span> <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>cond1<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>cond2<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+            ctrl <span class="token operator">&lt;=</span> <span class="token number">1'b1</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-end">end</span>
+    <span class="token keyword keyword-end">end</span> <span class="token keyword keyword-else">else</span> <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>cond3<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        ctrl <span class="token operator">&lt;=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">// 图 37 逻辑清晰写法示例</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> rst_n<span class="token punctuation">)</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token operator">~</span>rst_n<span class="token punctuation">)</span>
+        sig_r <span class="token operator">&lt;=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-else">else</span> <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>sig<span class="token punctuation">)</span>
+        sig_r <span class="token operator">&lt;=</span> <span class="token number">1'b1</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-else">else</span>
+        sig_r <span class="token operator">&lt;=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><p>c)  下面"打拍"逻辑两者写法，后面的写法更清晰。</p>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">// 图 38 信号打拍的不规范写法示例</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> rst_n<span class="token punctuation">)</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token operator">~</span>rst_n<span class="token punctuation">)</span>
+        sig_r <span class="token operator">&lt;=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-else">else</span> <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>sig<span class="token punctuation">)</span>
+        sig_r <span class="token operator">&lt;=</span> <span class="token number">1'b1</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-else">else</span>
+        sig_r <span class="token operator">&lt;=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">// 图 39 信号打拍的规范写法示例</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> rst_n<span class="token punctuation">)</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token operator">~</span>rst_n<span class="token punctuation">)</span>
+        sig_r <span class="token operator">&lt;=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-else">else</span>
+        sig_r <span class="token operator">&lt;=</span> sig<span class="token punctuation">;</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><h3 id="第2条-时钟设计规范">第2条 时钟设计规范 </h3>
+<ol>
+<li>
+<p>内部产生的时钟，需要在一个单独的模块中生成。<br>
+a) 如果要放在不同的模块中，则要在Design SPEC中进行详细说明。</p>
+</li>
+<li>
+<p>每个模块的时钟信号应该从本模块的端口处得到。[S]<br>
+a) 下面clktmp时钟尽管是经过时序逻辑产生，但不是端口处获得，不推荐。这种产生时钟的逻辑需要在单独的时钟模块中处理。</p>
+</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">// 图 40 clk不推荐写法示例</span>
+<span class="token important">always@</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk<span class="token punctuation">)</span>
+    clktmp <span class="token operator">&lt;=</span> en<span class="token punctuation">;</span>
+
+<span class="token important">always@</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clktmp<span class="token punctuation">)</span>
+</code></pre><pre class="language-text">b) 允许的特例为：内部用clock_gate产生新的时钟。
+</pre>
+<ol start="3">
+<li>禁止在内部模块中使用组合逻辑产生时钟。<br>
+a) 下面clk2时钟由组合逻辑产生，不合理。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">// 图 41 clk由内部模块组合逻辑产生错误示例</span>
+<span class="token keyword keyword-input">input</span> clk1<span class="token punctuation">;</span>
+<span class="token keyword keyword-reg">reg</span> a<span class="token punctuation">;</span>
+<span class="token keyword keyword-reg">reg</span> clk2<span class="token punctuation">;</span>
+
+clk2 <span class="token operator">=</span> clk1 <span class="token operator">&amp;</span> a<span class="token punctuation">;</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk2 <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> rst_n<span class="token punctuation">)</span>
+</code></pre><ol start="4">
+<li>在设计中使用时钟上升沿触发。[S]<br>
+a) 如果存在下降沿触发的情况，需要在Design SPEC中详细说明，并提出对综合及布线的要求。如果设计中同时存在上升沿和下降沿逻辑，要注意占空比，保证timing满足基本要求。混用上升沿下降沿特例：跨电源域的同步信号，输出采用下降沿，输入采样则用上升沿。</li>
+<li>时钟信号只能连接到寄存器的时钟端，禁止clk当做数据赋值。<br>
+a) 下面示例时钟clk连接到test寄存器数据端上，违反规则。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">// 图 42 clk当做数据赋值错误写法示</span>
+<span class="token important">always@</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> rst_n<span class="token punctuation">)</span>
+    <span class="token function">if</span><span class="token punctuation">(</span><span class="token operator">!</span>rst_n<span class="token punctuation">)</span> test <span class="token operator">&lt;=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-else">else</span>       test <span class="token operator">&lt;=</span> clk<span class="token punctuation">;</span>
+</code></pre><ol start="6">
+<li>模块的时钟端，禁止将时钟管脚赋予固定值。<br>
+a) 下面把时钟端赋予固定值0，违反规则。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">// 图 43 时钟管脚为固定值示例</span>
+DFF u0 <span class="token punctuation">(</span>
+    <span class="token punctuation">.</span>D  <span class="token punctuation">(</span>Din  <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>CP <span class="token punctuation">(</span><span class="token number">1'b0</span> <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>Q  <span class="token punctuation">(</span>Dout <span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><ol start="7">
+<li>在每个always块中，只允许出现一个clock。<br>
+a) 下面示例出现两个clock，违反规则。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">// 图 44 always中出现两个clk示例</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clkl <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> clk2 <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> rst_n<span class="token punctuation">)</span>
+</code></pre><ol start="8">
+<li>
+<p>时钟通路上的cell必须为clock 专用cell。<br>
+a) 该项在综合和后端实现后的netlist需要进行 check。</p>
+</li>
+<li>
+<p>Feedthrough的clock采用时钟反相器cell。<br>
+a) Feedthrough中的clock要用时钟cell，并且要用CKND，避免duty cycle问题。这一项在后端实现后也需要check。</p>
+</li>
+<li>
+<p>手动插入的clock gate cell需要在Design SPEC中说明，并提出综合及布线的要求。<br>
+a) 手动插入的clock gate会影响到后端 clock tree方案，需要一起讨论决定。</p>
+</li>
+</ol>
+<h3 id="第3条-复位设计规范">第3条 复位设计规范 </h3>
+<ol>
+<li>
+<p>复位结构尽量简单，内部产生的复位信号，在一个单独的模块中生成。[S]</p>
+</li>
+<li>
+<p>避免在内部模块中使用组合逻辑生成复位信号。[S]<br>
+a) 这种方式产生的复位信号可能产生glitch，不能直接使用，而需要经过复位同步后使用。</p>
+</li>
+<li>
+<p>寄存器采用异步复位方式。</p>
+</li>
+<li>
+<p>寄存器复位信号应为低电平有效。[S]<br>
+a) 下面示例为高电平复位，不推荐。</p>
+</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">// 图 45 高电平复位示例</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-posedge">posedge</span> rst_n<span class="token punctuation">)</span>
+    <span class="token function">if</span><span class="token punctuation">(</span>rst_n<span class="token punctuation">)</span>
+        dat_r <span class="token operator">&lt;=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+</code></pre><ol start="5">
+<li>
+<p>复位信号跨时钟域时，需要先做同步再使用。</p>
+</li>
+<li>
+<p>复位信号跨时钟同步时，确保scan模式下scan复位信号可以bypass到内部复位。<br>
+a) 如下图示例，scan的复位为输入rst_n，在scan模式下，内部复位new_rst_n需要bypass为rst_n，防止scan模式无法复位内部寄存器。<br>
+<img src="image-6.png" alt="图 46 scan模式下复位bypass电路示例"></p>
+</li>
+<li>
+<p>在一个always块中复位信号不要超过1个。<br>
+a) 下面示例出现两个reset，违反规则。</p>
+</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">// 图 47 always块中出现两个reset示例</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> rst_n1 <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> rst_n2<span class="token punctuation">)</span>
+</code></pre><ol start="8">
+<li>复位信号的触发必须与其极性相匹配，不能出现低有效的复位信号，在if条件中写成高触发等类似情况。<br>
+a) 下面示例把低有效的复位信号，写成高有效触发，极性不匹配，违反规则。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">// 图 48 复位触发与其极性不匹配示例</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> rst_n<span class="token punctuation">)</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>rst_n<span class="token punctuation">)</span>
+</code></pre><ol start="9">
+<li>禁止出现同步复位和异步复位信号的组合逻辑。<br>
+a) 下面示例异步复位和同步复位信号进行组合逻辑违反规则。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">// 图 49 异步复与同步复位进行组合逻辑示例</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> async_rst<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+    <span class="token function">if</span><span class="token punctuation">(</span> <span class="token operator">~</span>async_rst <span class="token operator">|</span> sync_rst <span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><ol start="10">
+<li>组合逻辑不需要复位。<br>
+a) 下面示例组合逻辑用了复位，没有必要。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">// 图 50 组合逻辑存在复位示例</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+    <span class="token function">if</span><span class="token punctuation">(</span><span class="token operator">~</span>rst_n<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        test_d <span class="token operator">=</span> <span class="token number">8'd0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span>
+    <span class="token keyword keyword-else">else</span> <span class="token function">if</span><span class="token punctuation">(</span>cond1<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        test_d <span class="token operator">=</span> dat1<span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span>
+    <span class="token keyword keyword-else">else</span> <span class="token keyword keyword-begin">begin</span>
+        test_d <span class="token operator">=</span> <span class="token number">8'd0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><ol start="11">
+<li>复位if逻辑后，后面用else，避免直接用if。<br>
+a) 下面示例应该用 else if才可以。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">// 图 51 复位if逻辑后再使用if示例</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> rst_n<span class="token punctuation">)</span>
+    <span class="token function">if</span><span class="token punctuation">(</span><span class="token operator">~</span>rst_n<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        test_d <span class="token operator">&lt;=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span>
+    <span class="token function">if</span><span class="token punctuation">(</span>clr<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        test_d <span class="token operator">&lt;=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span>
+    <span class="token keyword keyword-else">else</span> <span class="token function">if</span><span class="token punctuation">(</span>vld<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        test_d <span class="token operator">&lt;=</span> datin<span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><ol start="12">
+<li>复位值必须是常量。<br>
+a) 下面示例复位值为一个变量，违反规则。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 52 寄存器复位值不是常量示例</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> rst_n<span class="token punctuation">)</span>
+    <span class="token function">if</span><span class="token punctuation">(</span><span class="token operator">~</span>rst_n<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        test_d <span class="token operator">&lt;=</span> data_init<span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span>
+    <span class="token keyword keyword-else">else</span> <span class="token function">if</span><span class="token punctuation">(</span>clr<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        test_d <span class="token operator">&lt;=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span>
+    <span class="token keyword keyword-else">else</span> <span class="token function">if</span><span class="token punctuation">(</span>vld<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        test_d <span class="token operator">&lt;=</span> datin<span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><ol start="13">
+<li>多变量在一个时序always块时，复位要完整。<br>
+a) 下面示例中，dat3没有复位值，会导致rst_n信号会串入到dat3寄存器的D端或者clk端（通过clock gate的en串入），与预期设计不一致。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">// 图 53 多变量复位不完整示例</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> rst_n<span class="token punctuation">)</span>
+    <span class="token function">if</span><span class="token punctuation">(</span><span class="token operator">~</span>rst_n<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        dat1 <span class="token operator">&lt;=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+        dat2 <span class="token operator">&lt;=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span>
+    <span class="token keyword keyword-else">else</span> <span class="token function">if</span><span class="token punctuation">(</span>cond<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        dat1 <span class="token operator">&lt;=</span> dat1_in<span class="token punctuation">;</span>
+        dat2 <span class="token operator">&lt;=</span> dat2_in<span class="token punctuation">;</span>
+        dat3 <span class="token operator">&lt;=</span> dat3_in<span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><ol start="14">
+<li>用于控制的单bit信号，往往是需要复位的。而长位宽的数据信号，要根据使用场合决定是否需要复位。</li>
+</ol>
+<h3 id="第4条-表达式使用规范">第4条 表达式使用规范 </h3>
+<ol>
+<li>参与比较、加减等运算的操作数的位宽要匹配。<br>
+a) 下面示例A、B位宽不匹配进行了比较运算，违反规则。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">// 图 54 位宽不匹配变量进行逻辑运算错误写法示例</span>
+<span class="token keyword keyword-reg">reg</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> A<span class="token punctuation">;</span>
+<span class="token keyword keyword-reg">reg</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> B<span class="token punctuation">;</span>
+
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span> A <span class="token operator">&lt;</span> B <span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+</code></pre><ol start="2">
+<li>不允许用“?”当作常量匹配。<br>
+a) 下面示例A与?比较，不推荐。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 55 用“ ？”作常量匹配错误写法示例</span>
+<span class="token keyword keyword-reg">reg</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> A<span class="token punctuation">;</span>
+
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span>
+    <span class="token function">if</span><span class="token punctuation">(</span> A <span class="token operator">==</span> <span class="token number">4'b1???</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+</code></pre><ol start="3">
+<li>不允许多bit信号的边沿触发。<br>
+a) 下面示例clock为多bit时钟，不能直接用其边沿触发。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 56 时钟为多比特信号错误写法示例</span>
+<span class="token keyword keyword-input">input</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span>clock
+<span class="token important">always @</span> <span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clock<span class="token punctuation">)</span>
+</code></pre><ol start="4">
+<li>
+<p>例化模块或调用函数时，信号位宽要匹配。</p>
+</li>
+<li>
+<p>在同一操作中不能同时出现有符号数和无符号数。<br>
+a) 下面示例a为有符号数，b为无符号数，不能同时出现在同一操作中。</p>
+</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 57 有符号数和无符号数进行逻辑运算错误示例</span>
+<span class="token keyword keyword-reg">reg</span> <span class="token keyword keyword-signed">signed</span> <span class="token punctuation">[</span><span class="token number">31</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> a<span class="token punctuation">;</span>
+<span class="token keyword keyword-reg">reg</span>        <span class="token punctuation">[</span><span class="token number">31</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> b<span class="token punctuation">;</span>
+
+<span class="token keyword keyword-assign">assign</span> c <span class="token operator">=</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+</code></pre><ol start="6">
+<li>在判断条件中不可以出现布尔表达式一直无效的情况。<br>
+a) 下面示例if条件始终不满足，这种无效电路应该移除。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 58 if条件不存在满足情况示例</span>
+<span class="token keyword keyword-parameter">parameter</span> P1 <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-parameter">parameter</span> P2 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span>
+    <span class="token function">if</span><span class="token punctuation">(</span> P1 <span class="token operator">&lt;</span> P2 <span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+</code></pre><ol start="7">
+<li>逻辑比较操作符不能出现三态值X或Z 。<br>
+a) 下面示例if判断中出现了X，违反规则。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 58 if条件不存在满足情况示例</span>
+<span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>in <span class="token operator">==</span> <span class="token number">1'bx</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+</code></pre><p>图 59 逻辑比较中出现“X”或“Z”示例</p>
+<ol start="8">
+<li>
+<p>信号只能有一个驱动（三态除外）。<br>
+a) 芯片内部只有模拟IP的信号可能用到三态多驱动，如模拟MUX的output。</p>
+</li>
+<li>
+<p>对于常数，需要指明位宽和进制（<code>`d</code> <code>`h</code> <code>`b</code> <code>`o</code>   )，如8’d0。[S]</p>
+</li>
+<li>
+<p>对于数据类型只能使用wire、reg、integer、genvar四种，且不可以为负数。</p>
+</li>
+<li>
+<p>在if条件语句中，不要使用算术运算表达式。[S]<br>
+a) 下面示例if中有a-1的算术运算，不推荐。</p>
+</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 60 条件语句使用算术运算表达式示例</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span> a <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">==</span> b <span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+</code></pre><ol start="12">
+<li>复杂表达式要使用括号将其分割为单个运算、逻辑或关系操作。<br>
+a) 下面示例采用后一种用括号括起来会更清晰。<br>
+不推荐写法：</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 61 复杂表达式不推荐写法示例</span>
+<span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token operator">&amp;</span>a<span class="token operator">==</span><span class="token number">1'b1</span><span class="token operator">&amp;&amp;!</span>flag<span class="token operator">==</span><span class="token number">1'b1</span><span class="token operator">||</span>b<span class="token operator">==</span><span class="token number">1'b1</span><span class="token punctuation">)</span>
+</code></pre><p>推荐写法：</p>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 62 复杂表达式推荐写法示例</span>
+<span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>a <span class="token operator">==</span> <span class="token number">1'b1</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span><span class="token operator">!</span>flag <span class="token operator">==</span> <span class="token number">1'b1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token punctuation">(</span>b <span class="token operator">==</span> <span class="token number">1'b1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre><ol start="13">
+<li>复杂条件表达式尽量简化。[S]<br>
+a) 如下面示例条件中8个表达式。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 63 复杂条件不推荐写法示例</span>
+<span class="token function">if</span><span class="token punctuation">(</span> a <span class="token operator">||</span> b <span class="token operator">||</span> c <span class="token operator">||</span> d <span class="token operator">||</span> e <span class="token operator">||</span> f <span class="token operator">||</span> g <span class="token operator">||</span> h <span class="token punctuation">)</span>
+</code></pre><p>b) 可合并成如下，这种方式有利于提高验证conditional coverage。</p>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 64 复杂表达式推荐写法示例</span>
+<span class="token keyword keyword-assign">assign</span> a_int1 <span class="token operator">=</span> a <span class="token operator">||</span> b <span class="token operator">||</span> c <span class="token operator">||</span> d<span class="token punctuation">;</span>
+<span class="token keyword keyword-assign">assign</span> a_int2 <span class="token operator">=</span> e <span class="token operator">||</span> f <span class="token operator">||</span> g <span class="token operator">||</span> h<span class="token punctuation">;</span>
+<span class="token keyword keyword-assign">assign</span> a_int3 <span class="token operator">=</span> a_int1 <span class="token operator">||</span> a_int2<span class="token punctuation">;</span>
+
+<span class="token function">if</span><span class="token punctuation">(</span> a_int3 <span class="token punctuation">)</span>
+</code></pre><ol start="14">
+<li>禁止一行存在多个赋值表达式。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 65 一行存在多个赋值表达式示例。</span>
+<span class="token keyword keyword-assign">assign</span> a<span class="token operator">=</span>b<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token keyword keyword-assign">assign</span> c<span class="token operator">=</span>d<span class="token punctuation">;</span><span class="token keyword keyword-assign">assign</span> dout<span class="token operator">=</span>a<span class="token operator">&amp;</span>e<span class="token punctuation">;</span>
+</code></pre><ol start="15">
+<li>译码表达式的条件空间要尽量完备。[S]<br>
+a) 如下面示例，功能上nonce_id范围是<code>0~`CORE_NUM-1</code>，采用assign语句译码得到match0-match3， 条件并不完备，没有覆盖到nonce_id&gt;=`CORE_NUM的情况，容错性能低，当nonce_id超出范围后无法覆盖。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 66 译码表达式的条件不完备示例</span>
+<span class="token keyword keyword-assign">assign</span> match0 <span class="token operator">=</span> <span class="token punctuation">(</span>nonce_id<span class="token operator">&gt;=</span>'CORE_NUM<span class="token operator">*</span><span class="token number">4</span><span class="token operator">*</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>nonce_id<span class="token operator">&lt;</span>'CORE_NUM<span class="token operator">*</span><span class="token number">4</span><span class="token operator">*</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-assign">assign</span> match1 <span class="token operator">=</span> <span class="token punctuation">(</span>nonce_id<span class="token operator">&gt;=</span>'CORE_NUM<span class="token operator">*</span><span class="token number">4</span><span class="token operator">*</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>nonce_id<span class="token operator">&lt;</span>'CORE_NUM<span class="token operator">*</span><span class="token number">4</span><span class="token operator">*</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-assign">assign</span> match2 <span class="token operator">=</span> <span class="token punctuation">(</span>nonce_id<span class="token operator">&gt;=</span>'CORE_NUM<span class="token operator">*</span><span class="token number">4</span><span class="token operator">*</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>nonce_id<span class="token operator">&lt;</span>'CORE_NUM<span class="token operator">*</span><span class="token number">4</span><span class="token operator">*</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-assign">assign</span> match3 <span class="token operator">=</span> <span class="token punctuation">(</span>nonce_id<span class="token operator">&gt;=</span>'CORE_NUM<span class="token operator">*</span><span class="token number">4</span><span class="token operator">*</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>nonce_id<span class="token operator">&lt;</span>'CORE_NUM<span class="token operator">*</span><span class="token number">4</span><span class="token operator">*</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><ol start="16">
+<li>建议采用下面的方式实现，match3覆盖到nonce_id&gt;=`CORE_NUM的情况，并且电路更简单，容错性能高。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 67 译码表达式的条件完备示例</span>
+<span class="token keyword keyword-assign">assign</span> match0 <span class="token operator">=</span>                              <span class="token punctuation">(</span>nonce_id<span class="token operator">&lt;</span>'CORE_NUM<span class="token operator">/</span><span class="token number">4</span><span class="token operator">*</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-assign">assign</span> match1 <span class="token operator">=</span> <span class="token punctuation">(</span>nonce_id<span class="token operator">&gt;=</span>'CORE_NUM<span class="token operator">/</span><span class="token number">4</span><span class="token operator">*</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>nonce_id<span class="token operator">&lt;</span>'CORE_NUM<span class="token operator">/</span><span class="token number">4</span><span class="token operator">*</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-assign">assign</span> match2 <span class="token operator">=</span> <span class="token punctuation">(</span>nonce_id<span class="token operator">&gt;=</span>'CORE_NUM<span class="token operator">/</span><span class="token number">4</span><span class="token operator">*</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>nonce_id<span class="token operator">&lt;</span>'CORE_NUM<span class="token operator">/</span><span class="token number">4</span><span class="token operator">*</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-assign">assign</span> match3 <span class="token operator">=</span> <span class="token punctuation">(</span>nonce_id<span class="token operator">&gt;=</span>'CORE_NUM<span class="token operator">/</span><span class="token number">4</span><span class="token operator">*</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token punctuation">;</span>
+</code></pre><ol start="17">
+<li>尽量采用公共子表达式。[S]<br>
+a) 如下面示例抽取公共子表达式z=a+b。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 68 抽取公共子表达式示例</span>
+<span class="token keyword keyword-assign">assign</span> x <span class="token operator">=</span> a <span class="token operator">+</span> b <span class="token operator">+</span> c<span class="token punctuation">;</span>
+<span class="token keyword keyword-assign">assign</span> y <span class="token operator">=</span> d <span class="token operator">+</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+
+<span class="token keyword keyword-assign">assign</span> z <span class="token operator">=</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+<span class="token keyword keyword-assign">assign</span> x <span class="token operator">=</span> z <span class="token operator">+</span> c<span class="token punctuation">;</span>
+<span class="token keyword keyword-assign">assign</span> y <span class="token operator">=</span> d <span class="token operator">+</span> z<span class="token punctuation">;</span>
+</code></pre><h3 id="第5条-语句声明规范">第5条 语句声明规范 </h3>
+<ol>
+<li>每一行不要定义多个变量。[S]<br>
+a) 下面示例一行定义多个变量：</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 69 一行定义多个变量示例</span>
+<span class="token keyword keyword-wire">wire</span> <span class="token punctuation">[</span>N<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> signal1<span class="token punctuation">,</span> signal2<span class="token punctuation">,</span> signal3<span class="token punctuation">;</span>
+</code></pre><p>b) 改成如下每一行一个变量更为清晰。</p>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 70 定义变量正确写法示例</span>
+<span class="token keyword keyword-wire">wire</span> <span class="token punctuation">[</span>N<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> signal1<span class="token punctuation">;</span>
+<span class="token keyword keyword-wire">wire</span> <span class="token punctuation">[</span>N<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> signal2<span class="token punctuation">;</span>
+<span class="token keyword keyword-wire">wire</span> <span class="token punctuation">[</span>N<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> signal3<span class="token punctuation">;</span>
+</code></pre><ol start="2">
+<li>
+<p>信号需要显式定义。[S]<br>
+a) 没有显式定义的wire类型是当作1bit的，容易出错。</p>
+</li>
+<li>
+<p>信号声明时不要赋值。</p>
+</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 71 信号声明存在赋值示例</span>
+<span class="token keyword keyword-reg">reg</span> temp <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+</code></pre><ol start="4">
+<li>
+<p>禁止在组合逻辑中使用非阻塞赋值。</p>
+</li>
+<li>
+<p>禁止在时序逻辑中使用阻塞赋值。</p>
+</li>
+<li>
+<p>禁止对同一个变量既使用阻塞赋值，又使用非阻塞赋值。</p>
+</li>
+<li>
+<p>禁止同一个always块中既使用阻塞赋值，又使用非阻塞赋值。</p>
+</li>
+<li>
+<p>定义多bit总线使用降序。</p>
+</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 72 定义多比特变量示例</span>
+<span class="token keyword keyword-reg">reg</span> <span class="token punctuation">[</span>N<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> data<span class="token punctuation">;</span>
+</code></pre><ol start="9">
+<li>定义mem类型时位宽用降序，深度用升序。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 73 定义mem类型变量示例</span>
+<span class="token keyword keyword-reg">reg</span> <span class="token punctuation">[</span>N<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> mem_array <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span>M<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre><p>a) 深度部分用升序[0:M-1]，便于验证环境初始化mem的数据，读取txt文件第一行对应mem_array[0]，更为清晰。</p>
+<ol start="10">
+<li>
+<p>避免局部变量名和全局变量名发生冲突。</p>
+</li>
+<li>
+<p>禁止在赋值语句中出现”X” / ”Z” 。</p>
+</li>
+<li>
+<p>谨慎使用for循环。[S]</p>
+</li>
+<li>
+<p>避免出现不确定的for循环的初始值。<br>
+a) 下面示例r初始值不确定，违反规则。</p>
+</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 74 for循环初始值不确定示例</span>
+<span class="token keyword keyword-reg">reg</span> <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> r<span class="token punctuation">;</span>
+
+<span class="token keyword keyword-for">for</span> <span class="token punctuation">(</span>r<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">:</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> r <span class="token operator">&lt;</span><span class="token number">10</span><span class="token punctuation">;</span> r<span class="token operator">=</span>r<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-for">for</span> <span class="token punctuation">(</span>r<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>   <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> r <span class="token operator">&lt;</span><span class="token number">10</span><span class="token punctuation">;</span> r<span class="token operator">=</span>r<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
+</code></pre><ol start="14">
+<li>避免for循环中出现不明确的step语句。<br>
+a) 下面示例step不确定。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 75 for循环step不确定示例</span>
+<span class="token keyword keyword-reg">reg</span> <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> r<span class="token punctuation">;</span>
+
+<span class="token keyword keyword-for">for</span> <span class="token punctuation">(</span>r <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> r <span class="token operator">&lt;</span><span class="token number">10</span><span class="token punctuation">;</span> r<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span>r<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
+</code></pre><ol start="15">
+<li>禁止在循环过程中对index值进行修改。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 76 循环过程中对index进行修改示例</span>
+<span class="token function">for</span><span class="token punctuation">(</span>i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">8</span><span class="token punctuation">;</span>i<span class="token operator">=</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
+    i<span class="token operator">=</span>i<span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">;</span>
+</code></pre><ol start="16">
+<li>要求for循环中的条件的范围是可计算的（禁止for循环中条件范围出现变量）。<br>
+a) 下面示例a是变量，其值可能随时发生变化，用a作为循环的范围，会出现逻辑上的错误。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 77 for循环条件范围出现变量示例</span>
+<span class="token function">for</span><span class="token punctuation">(</span><span class="token keyword keyword-integer">integer</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">!=</span> a<span class="token punctuation">;</span> i <span class="token operator">=</span> i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+</code></pre><ol start="17">
+<li>
+<p>要求for循环中条件的初始值是可以计算的。也就是禁止for循环中条件初始值中出现变量。</p>
+</li>
+<li>
+<p>禁止使用casex语句。</p>
+</li>
+<li>
+<p>建议不要使用casez语句。[S]</p>
+</li>
+<li>
+<p>建议使用case语句来代替没有优先级要求的嵌套if语句。[S]</p>
+</li>
+<li>
+<p>case语句中的default分支放在最后一行。</p>
+</li>
+<li>
+<p>建议case语句的条件都是常量。<br>
+a) 下面示例case分支存在c+d表达式，不推荐。</p>
+</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 78 case语句分支条件存在变量示例</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk<span class="token punctuation">)</span>
+    <span class="token function">case</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+        <span class="token number">2'b00</span> <span class="token punctuation">:</span> b <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token number">2'b01</span> <span class="token punctuation">:</span> b <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        c<span class="token operator">+</span>d   <span class="token punctuation">:</span> b <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-endcase">endcase</span>
+</code></pre><ol start="23">
+<li>避免case的选择条件是常量; [S]<br>
+a) 下面示例case选择条件为常量1，生成的电路结构为3bit优先级的encoder。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 79 case语句选择条件为常量示例</span>
+<span class="token keyword keyword-reg">reg</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> encode<span class="token punctuation">;</span>
+<span class="token keyword keyword-reg">reg</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> dout<span class="token punctuation">;</span>
+
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-case">case</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+        encode<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token punctuation">:</span> dout <span class="token operator">=</span> <span class="token number">3'b100</span><span class="token punctuation">;</span>
+        encode<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token punctuation">:</span> dout <span class="token operator">=</span> <span class="token number">3'b010</span><span class="token punctuation">;</span>
+        encode<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token punctuation">:</span> dout <span class="token operator">=</span> <span class="token number">3'b001</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-default">default</span>   <span class="token punctuation">:</span> dout <span class="token operator">=</span> <span class="token number">3'b000</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-endcase">endcase</span>
+</code></pre><p>b) 上面语句逻辑功能同下：</p>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 80 case语句示例对比</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span>
+    <span class="token function">if</span><span class="token punctuation">(</span>encode<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        dout <span class="token operator">=</span> <span class="token number">3'b100</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-else">else</span> <span class="token function">if</span><span class="token punctuation">(</span>encode<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        dout <span class="token operator">=</span> <span class="token number">3'b010</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-else">else</span> <span class="token function">if</span><span class="token punctuation">(</span>encode<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        dout <span class="token operator">=</span> <span class="token number">3'b001</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-else">else</span>
+        dout <span class="token operator">=</span> <span class="token number">3'b000</span><span class="token punctuation">;</span>
+</code></pre><ol start="24">
+<li>case语句中的default可灵活合并一些分支以提高代码覆盖率。[S]<br>
+下面示例两种case描述，功能一样，后一种可以有更好的line coverage 和conditional coverage。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 81 case default对比写法示例</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+    <span class="token function">case</span><span class="token punctuation">(</span>cond<span class="token punctuation">)</span>
+        <span class="token number">3'b000</span> <span class="token punctuation">:</span> dout <span class="token operator">=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+        <span class="token number">3'b001</span> <span class="token punctuation">:</span> dout <span class="token operator">=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+        <span class="token number">3'b010</span> <span class="token punctuation">:</span> dout <span class="token operator">=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+        <span class="token number">3'b011</span> <span class="token punctuation">:</span> dout <span class="token operator">=</span> <span class="token number">1'b1</span><span class="token punctuation">;</span>
+        <span class="token number">3'b100</span> <span class="token punctuation">:</span> dout <span class="token operator">=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+        <span class="token number">3'b101</span> <span class="token punctuation">:</span> dout <span class="token operator">=</span> <span class="token number">1'b1</span><span class="token punctuation">;</span>
+        <span class="token number">3'b110</span> <span class="token punctuation">:</span> dout <span class="token operator">=</span> <span class="token number">1'b1</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-default">default</span> <span class="token punctuation">:</span> dout <span class="token operator">=</span> <span class="token number">1'b1</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-endcase">endcase</span>
+<span class="token keyword keyword-end">end</span>
+
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+    <span class="token function">case</span><span class="token punctuation">(</span>cond<span class="token punctuation">)</span>
+        <span class="token number">3'b000</span> <span class="token punctuation">:</span> dout <span class="token operator">=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+        <span class="token number">3'b001</span> <span class="token punctuation">:</span> dout <span class="token operator">=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+        <span class="token number">3'b010</span> <span class="token punctuation">:</span> dout <span class="token operator">=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+        <span class="token number">3'b100</span> <span class="token punctuation">:</span> dout <span class="token operator">=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-default">default</span> <span class="token punctuation">:</span> dout <span class="token operator">=</span> <span class="token number">1'b1</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-endcase">endcase</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><h3 id="第6条-可综合设计规范">第6条 可综合设计规范 </h3>
+<ol>
+<li>RTL设计中要避免使用不可综合的语句。<br>
+a) 如果RTL代码中要嵌入仿真语句用于debug，需要用<code>ifdef SIMULATION … </code>endif 段落嵌入，避免仿真语句被综合。综合的filelist中不可define SIMULATION，此define仅用于仿真。<br>
+b) 另外，仿真的语句也要注意条件，避免组合逻辑的条件直接触发，可能会有毛刺导致误判。如下示例用于监测conflict，用（a_hit &amp; b_hit） 组合逻辑触发，可能导致虚假conflict被检测到。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 82 避免仿真语句被综合示例一</span>
+<span class="token constant">`ifdef</span> SIMULATION
+    <span class="token important">always @</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        <span class="token function">if</span><span class="token punctuation">(</span> a_hit <span class="token operator">&amp;</span> b_hit<span class="token punctuation">)</span>
+            <span class="token kernel-function property">$display</span> <span class="token punctuation">(</span><span class="token string">"Error! mem access conflict! "</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-end">end</span>
+<span class="token constant">`endif</span>
+</code></pre><p>c) 此时建议采用下面时序逻辑监测conflict，避免误判。</p>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code>图 <span class="token number">83</span> 避免仿真语句被综合示例二
+<span class="token constant">`ifdef</span> SIMULATION
+    <span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        <span class="token function">if</span><span class="token punctuation">(</span> a_hit <span class="token operator">&amp;</span> b_hit<span class="token punctuation">)</span>
+            <span class="token kernel-function property">$display</span> <span class="token punctuation">(</span><span class="token string">"Error! mem access conflict! "</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-end">end</span>
+<span class="token constant">`endif</span>
+</code></pre><ol start="2">
+<li>不允许使用initial 语句。</li>
+<li>不允许使用disable语句。</li>
+<li>不允许使用event语句。</li>
+<li>不允许使用wait语句。</li>
+<li>不允许使用repeat循环语句。</li>
+<li>不允许使用while循环语句。</li>
+<li>不允许使用forever循环语句。</li>
+<li>不允许使用fork join语句。</li>
+<li>不允许使用force语句。</li>
+<li>不允许使用release语句。</li>
+<li>不允许对同一个变量既使用阻塞赋值，又使用非阻塞赋值。</li>
+<li>不允许同一个always块中既使用阻塞赋值，又使用非阻塞赋值。</li>
+<li>不允许在多个always块中对同一个变量赋值。</li>
+<li>always块中不允许出现assign/deassign语句。</li>
+<li>避免在代码中嵌入EDA工具的命令。[S]<br>
+a) 不要在源代码中使用嵌入式的EDA工具命令。因为其他的EDA工具并不一定能识别这些隐含的命令，这会导致错误的结果，降低代码的可移植性。当综合策略改变时，嵌在源代码中的命令不如 script 文件中的命令灵活。例如：</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//synopsys async_set_reset “reset”</span>
+</code></pre><p>b) 这个规则有一个例外就是编译开关的打开和关闭可以嵌入到代码中。例如：</p>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//synopsys translate_off</span>
+<span class="token comment">//synopsys translate_on</span>
+</code></pre><ol start="17">
+<li>
+<p>信号必需显式定义。<br>
+a) 没有显式定义的wire类型是当作1bit的，容易出错。</p>
+</li>
+<li>
+<p>不允许使用<code>"==="</code> 或者<code>"!=="</code>操作符。</p>
+</li>
+<li>
+<p>function中不能包含时序逻辑。</p>
+</li>
+<li>
+<p>不允许使用“.”的方式调用其他层级信号。<br>
+a) 下面示例调用submodule下的data_in信号是违规的。</p>
+</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 84 使用“.”调用其他层级信号示例</span>
+<span class="token keyword keyword-assign">assign</span> data_out <span class="token operator">=</span> submodule<span class="token punctuation">.</span>data_in<span class="token punctuation">;</span>
+</code></pre><ol start="21">
+<li>不建议使用delay延时语句。[S]<br>
+a) delay延时语句会被综合优化掉。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 85 delay使用示例</span>
+<span class="token keyword keyword-assign">assign</span> <span class="token number">#2</span> dout <span class="token operator">=</span> din <span class="token operator">&amp;</span> sel<span class="token punctuation">;</span>
+<span class="token important">always</span> <span class="token number">#2</span> dout <span class="token operator">=</span> din<span class="token punctuation">;</span>
+<span class="token important">always</span>      dout <span class="token operator">=</span> <span class="token number">#2</span> din<span class="token punctuation">;</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk<span class="token punctuation">)</span>
+    dout <span class="token operator">&lt;=</span> <span class="token number">#1</span> din<span class="token punctuation">;</span>
+</code></pre><ol start="22">
+<li>
+<p>不允许使用除法（/）或者取模（%）的运算符直接对变量进行除法和取模运算。<br>
+a) 除法和取模运算需要专门进行设计，否则综合的电路效果很差。</p>
+</li>
+<li>
+<p>原则上用不到乘法器和除法器。逻辑设计中，乘法器和除法器资源开销大，往往可以用其他方式优化实现。</p>
+</li>
+<li>
+<p>不允许在敏感列表中出现同一个信号的双沿。<br>
+a) 下面示例一个always块既用clk的上升沿又用clk下降沿，违反规则。</p>
+</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 86 always敏感列表中出现双沿示例</span>
+<span class="token important">always @</span> <span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> clk<span class="token punctuation">)</span>
+</code></pre><ol>
+<li>避免移位寄存器的移位值是变量。[S]<br>
+a) 下面示例“&lt;&lt;”左移一个变量，综合出的电路可能超出预期，不建议这种写法。</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 87 移位值是变量示例</span>
+<span class="token keyword keyword-input">input</span> <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> data_in<span class="token punctuation">;</span>
+<span class="token keyword keyword-input">input</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> shift_a<span class="token punctuation">;</span>
+<span class="token keyword keyword-wire">wire</span>  <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> data_out<span class="token punctuation">;</span>
+
+<span class="token keyword keyword-assign">assign</span> data_out <span class="token operator">=</span> <span class="token punctuation">(</span>data_in <span class="token operator">&lt;&lt;</span> shift_a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><h3 id="第7条-状态机设计规范">第7条 状态机设计规范 </h3>
+<ol>
+<li>
+<p>状态机（FSM）采用<strong>两段式写法</strong>，即将状态机的描述分成两个always块，一个为组合逻辑得到nxt_state和状态机输出，一个为时序逻辑得到cur_state。</p>
+</li>
+<li>
+<p>要求状态机有默认状态。<br>
+a) 必须使用default条件为状态机指定一个默认的状态，防止状态机进入死锁状态。</p>
+</li>
+<li>
+<p>要求状态机的状态命名和编码要求：<br>
+a) 状态命名使用ST_前缀。<br>
+b) 在FSM输出逻辑较多时，状态编码建议使用独热码。独热码的编码方式可以让状态机输出逻辑的面积和时序更优。<br>
+c) 状态命名使用localparam，而不是parameter，是防止被外部例化时修改。<br>
+d) 状态名只会在两段式的always块中出现，理论上不会再出现于其他逻辑中。</p>
+</li>
+<li>
+<p>要求状态机的状态数不能过多，控制在40个以内。[S]<br>
+a) 状态数要合理，去除不必要的状态。</p>
+</li>
+<li>
+<p>状态机的代码示例。</p>
+</li>
+</ol>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">//图 88 状态机代码示例</span>
+<span class="token keyword keyword-localparam">localparam</span> ST_IDLE   <span class="token operator">=</span> <span class="token number">3'b001</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-localparam">localparam</span> ST_PROCESS <span class="token operator">=</span> <span class="token number">3'b010</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-localparam">localparam</span> ST_END     <span class="token operator">=</span> <span class="token number">3'b100</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-reg">reg</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> cur_state<span class="token punctuation">;</span>
+<span class="token keyword keyword-reg">reg</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> nxt_state<span class="token punctuation">;</span>
+<span class="token keyword keyword-reg">reg</span>       process_en<span class="token punctuation">;</span>
+
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> rst_n<span class="token punctuation">)</span>
+    <span class="token function">if</span><span class="token punctuation">(</span><span class="token operator">~</span>rst_n<span class="token punctuation">)</span>
+        cur_state <span class="token operator">&lt;=</span> <span class="token number">3'd0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-else">else</span>
+        cur_state <span class="token operator">&lt;=</span> nxt_state<span class="token punctuation">;</span>
+
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+    nxt_state <span class="token operator">=</span> cur_state<span class="token punctuation">;</span>
+    process_en <span class="token operator">=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+    <span class="token function">case</span><span class="token punctuation">(</span>cur_state<span class="token punctuation">)</span>
+        ST_IDLE<span class="token punctuation">:</span> <span class="token keyword keyword-begin">begin</span>
+            <span class="token function">if</span><span class="token punctuation">(</span>start<span class="token punctuation">)</span>
+                nxt_state <span class="token operator">=</span> ST_PROCESS<span class="token punctuation">;</span>
+            <span class="token keyword keyword-else">else</span>
+                nxt_state <span class="token operator">=</span> ST_IDLE<span class="token punctuation">;</span>
+        <span class="token keyword keyword-end">end</span>
+        ST_PROCESS<span class="token punctuation">:</span> <span class="token keyword keyword-begin">begin</span>
+            nxt_state <span class="token operator">=</span> ST_END<span class="token punctuation">;</span>
+            process_en <span class="token operator">=</span> <span class="token number">1'b1</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-end">end</span>
+        ST_END<span class="token punctuation">:</span> <span class="token keyword keyword-begin">begin</span>
+            nxt_state <span class="token operator">=</span> ST_IDLE<span class="token punctuation">;</span>
+        <span class="token keyword keyword-end">end</span>
+        <span class="token keyword keyword-default">default</span><span class="token punctuation">:</span> nxt_state <span class="token operator">=</span> ST_IDLE<span class="token punctuation">;</span>
+    <span class="token keyword keyword-endcase">endcase</span>
+<span class="token keyword keyword-end">end</span>
+</code></pre><h3 id="第8条-跨时钟域逻辑规范">第8条 跨时钟域逻辑规范 </h3>
+<ol>
+<li>
+<p>跨时钟域逻辑（异步逻辑）在处理上很容易出现隐患，因而在电路设计中要尤其重视。涉及异步处理的逻辑必须在SPEC中独立成章节（异步处理章节），进行详细说明，并要画出电路结构图和波形示意，方便review。</p>
+</li>
+<li>
+<p>对于设置multicycle约束的电路，也需要当作异步进行处理，在SPEC的异步处理章节中进行详细描述。</p>
+</li>
+<li>
+<p>下列描述跨时钟域的逻辑规范，实际项目中必须使用common ip来实现同步操作，禁止手动写代码实现（例如两级寄存器必须使用common_sync，不能通过写rtl打两拍）。<br>
+a) 单比特控制信号跨时钟域的时候，至少使用两级寄存器同步之后使用。<br>
+<img src="image-7.png" alt="图 89 单bit信号跨时钟域同步"></p>
+</li>
+</ol>
+<blockquote>
+<p>图 89 单bit信号跨时钟域同步</p>
+</blockquote>
+<p>b) 跨时钟域第一级打拍的寄存器名称后缀为“_asyn”, 这样对编写约束和后仿真都比较方便。需要注意的是，这种跨时钟域电路目的是为了消除亚稳态影响，数据能否正确传输或采样，需要设计者根据实际情况来保证。</p>
+<p>c) 多比特数据信号跨时钟域的时候，必须在数据稳定后进行采样。这里多比特数据信号，特指可能存在多比特同时变化的数据信号，在跨时钟域时，就必须在数据稳定后进行采样。如果可以保证多比特数据信号只有单个比特发生变化，例如counter经过格雷码变化后的信号，则可以直接采样。</p>
+<p>d) 常用的多比特数据信号跨时钟域如下示例，是多比特数据信号dat_a（clka时钟域下）采样到另一个时钟域clkb下的常用处理方式，在tog_b_pulse有效时，dat_a必须是稳定有效的数据。数据带宽较高的多比特数据跨时钟域，可采用common的异步FIFO进行处理。<br>
+<img src="image-8.png" alt="图 90 多bit信号跨时钟域同步"></p>
+<blockquote>
+<p>图 90 多bit信号跨时钟域同步</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="verilog" class="language-verilog verilog"><code><span class="token comment">// 图 90 多bit信号跨时钟域同步,代码部分</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-negedge">negedge</span> rst_n<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+    <span class="token function">if</span><span class="token punctuation">(</span><span class="token operator">~</span>rst_n<span class="token punctuation">)</span> <span class="token keyword keyword-begin">begin</span>
+        tog_b_r0_asyn <span class="token operator">&lt;=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+        tog_b_r1      <span class="token operator">&lt;=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+        tog_b_r2      <span class="token operator">&lt;=</span> <span class="token number">1'b0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span> <span class="token keyword keyword-else">else</span> <span class="token keyword keyword-begin">begin</span>
+        tog_b_r0_asyn <span class="token operator">&lt;=</span> dat_tog_a<span class="token punctuation">;</span>
+        tog_b_r1      <span class="token operator">&lt;=</span> tog_b_r0_asyn<span class="token punctuation">;</span>
+        tog_b_r2      <span class="token operator">&lt;=</span> tog_b_r1<span class="token punctuation">;</span>
+    <span class="token keyword keyword-end">end</span>
+<span class="token keyword keyword-end">end</span>
+
+<span class="token keyword keyword-assign">assign</span> tog_b_pulse <span class="token operator">=</span> tog_b_r1 <span class="token operator">^</span> tog_b_r2<span class="token punctuation">;</span>
+
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword keyword-posedge">posedge</span> clk<span class="token punctuation">)</span>
+    dat_b <span class="token operator">&lt;=</span> dat_a<span class="token punctuation">;</span>
+</code></pre><p>e) 不允许组合逻辑输出的信号跨时钟域输出。不允许组合逻辑输出的信号跨时钟域，也就是跨时钟域的信号需要寄存器输出，避免出现glitch。示例如下，DB的毛刺可能被CLKB采到，在DB2出现不符合预期的脉冲。<br>
+<img src="image-9.png" alt="图 91 跨时钟域时使用组合逻辑引起毛刺的示例"></p>
+<blockquote>
+<p>图 91 跨时钟域时使用组合逻辑引起毛刺的示例</p>
+</blockquote>
+<p>f) 有时序对齐要求的操作需要在跨时钟域之前完成。上一条规则的案例DB出现了毛刺，是因为DA1和DA2有时序对齐的要求，改成如下电路，在跨时钟域前完成“DA1 &amp; DA2”则不会出问题。<br>
+<img src="image-10.png" alt="图 92 避免组合逻辑跨时钟域示例"></p>
+<blockquote>
+<p>图 92 避免组合逻辑跨时钟域示例</p>
+</blockquote>
+<p>另外，举例如下面电路，EN1和EN2都是从同一个信号D打拍过来，但在CLKB时钟域下，EN1和EN2就不再是对齐的。<br>
+<img src="image-11.png" alt="图 93 跨时钟域导致信号不对齐示例"></p>
+<blockquote>
+<p>图 93 跨时钟域导致信号不对齐示例</p>
+</blockquote>
+<p>g) 不能使用多个异步fifo来拼接成一个更宽的fifo。是上一条规则的延伸，经过异步fifo后，数据不再是对齐的，会导致拼接数据出错。</p>
+<p>h) 复位异步FIFO时，需要在两个时钟域下都要进行复位。例如“写”时钟域复位后，“读”时钟域也要进行复位后再使用FIFO，否则异步FIFO内部读写指针将错乱，导致功能出错。常见错误：对其中一个时钟域进行软复位后，另一个时钟域没有复位导致出错。</p>
+<ol start="4">
+<li>另外，总结几种跨时钟域常用实现方式：<br>
+a) 电平同步器。<br>
+适用于单比特位的控制信号或者进行格雷码编码的连续变化的数据信号。<br>
+文件路径：/ic/work/fe/common_ip/common_sync。</li>
+</ol>
+<p>b) 复位信号同步器。<br>
+通常在对时序电路进行复位时建议使用异步复位，但是异步复位会带来亚稳态的问题，通过异步复位同步释放模块可以改善这个问题。<br>
+文件路径：/ic/work/fe/common_ip/common_reset_sync。</p>
+<p>c) 脉冲同步。<br>
+从某个时钟域取出一个脉冲，然后在新的时钟域中建立另一个单时钟宽度的脉冲。<br>
+文件路径：/ic/work/fe/common_ip/common_pulse_sync。</p>
+<p>d) 异步FIFO。<br>
+数据信号不存在依次变化的特性，格雷码对此类数据无效，因此采用异步FIFO、握手协议或者用使能信号控制这样的方式来进行数据的传输。<br>
+文件路径：/ic/work/fe/common_ip/common_async_fifo。</p>
+<p>另外，core返回nonce建议采用专用异步FIFO—gn_fifo实现，其跨时钟域采用双向握手机制实现。<br>
+文件路径：/ic/work/fe/common_ip/gn_fifo。</p>
+<p>e) 时钟切换。<br>
+时钟切换要防止出现毛刺。<br>
+文件路径：/ic/work/fe/common_ip/common_clkmux。</p>
+<h3 id="第9条-除法器例化规范">第9条 除法器例化规范 </h3>
+<ol>
+<li>除法器的parameter例化时外部都不传参，直接在内部写成实际使用值。</li>
+<li>除法器建议的输入输出都建议用reg打拍。如下图所示。<br>
+<img src="image-12.png" alt="图 94 除法器例化示意图"></li>
+</ol>
+<blockquote>
+<p>图 94 除法器例化示意图</p>
+</blockquote>
+<h3 id="第10条-sram使用规范">第10条 SRAM使用规范 </h3>
+<ol>
+<li>
+<p>SRAM的模块命名要和功能应用解耦。<br>
+a) SRAM命名可以包含类型、深度、位宽等基本信息，而没必要包含SRAM的具体应用信息。例如深度为128、位宽为32bit的单口SRAM可以取名为 sram_sp_128x32。不同的功能可以使用相同的SRAM模块。</p>
+</li>
+<li>
+<p>SRAM的读使能信号不能置为常值。<br>
+a) SRAM读使能如果一直有效，会浪费power，并且会导致输出data随address变化，给仿真验证带来干扰。</p>
+</li>
+<li>
+<p>SRAM没有必要都放在顶层。SRAM的接口跟调用位置无关，遵循代码规范即可。</p>
+</li>
+<li>
+<p>尽量使用单口SRAM，原则上双口SRAM都可以用单口SRAM代替。</p>
+</li>
+<li>
+<p>不同Memory Compiler生成的SRAM，使能信号的极性可能不一样，需要谨慎。</p>
+</li>
+</ol>
+<h3 id="第11条-模块划分建议">第11条 模块划分建议 </h3>
+<ol>
+<li>不同时钟域的逻辑划分在不同的模块。<br>
+<img src="image-13.png" alt="图 95 按时钟域划分模块示例"></li>
+</ol>
+<blockquote>
+<p>图 95 按时钟域划分模块示例</p>
+</blockquote>
+<ol start="2">
+<li>
+<p>如果两个异步时钟有数据交互，跨时钟域逻辑放在一个独立模块。[S]<br>
+这有利于单独处理跨时钟域电路，也使得代码review更加容易。</p>
+</li>
+<li>
+<p>时钟和复位generator分别在独立的模块实现。<br>
+<img src="image-14.png" alt="图 96 时钟与复位划分示例"></p>
+</li>
+</ol>
+<blockquote>
+<p>图 96 时钟与复位划分示例</p>
+</blockquote>
+<ol start="4">
+<li>
+<p>保持相关的组合逻辑在同一个模块中。这有利于综合工具对逻辑的优化，也有利于时序预算和快速仿真。</p>
+</li>
+<li>
+<p>对不同设计目标的电路分成不同的模块。[S]<br>
+a) 将含有关键路径的逻辑和非关键路径的逻辑分成不同的模块，以便综合工具对关键路径采用速度优化，对非关键路径采用面积优化。</p>
+</li>
+<li>
+<p>IO PAD放在独立的模块。</p>
+</li>
+<li>
+<p>每个独立模块的输出信号，采用寄存器输出。[S]</p>
+</li>
+<li>
+<p>模块划分要兼顾模块逻辑大小。[S]<br>
+a) 单独harden的模块一般控制在100万个instance为佳， 这样EDA工具run time可控。</p>
+</li>
+<li>
+<p>顶层模块只负责连线，避免出现 glue logic。<br>
+a) 避免出现类似下图的glue logic。顶层模块集成时，相邻的harden block 之间只有IO一一相连，不能有其他任何cell，包括standard cell、TIE cell等。<br>
+<img src="image-15.png" alt="图 97 glue logic示例"></p>
+</li>
+</ol>
+<blockquote>
+<p>图 97 glue logic示例</p>
+</blockquote>
+<p>b) 单独harden的模块，如有信号要输出到其他多个模块，需要将信号对应输出多路，每个模块单独对应一路。如下面示例，block_A、block_B、block_C都是单独harden的，block_A要输出cnn给block_B和block_C，如果只输出一个信号cnn，那么Top集成时，需要将cnn同时连接到block_B和block_C，后端很难处理。<br>
+<img src="image-16.png" alt="图 98 harden的模块之间不当的连线方式示例"></p>
+<blockquote>
+<p>图 98 harden的模块之间不当的连线方式示例</p>
+</blockquote>
+<p>c) 合理的做法是：block_A输出2个信号cnn_b和cnn_c，分别连接到block_B和block_C，如下图所示。<br>
+<img src="image-17.png" alt="图 99 harden的模块之间推荐的连线方式示例"></p>
+<blockquote>
+<p>图 99 harden的模块之间推荐的连线方式示例</p>
+</blockquote>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+  
+    </body></html>

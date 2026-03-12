@@ -1,0 +1,99 @@
+{
+  "review_category": "all",
+  "target_files": [
+    "example/uart_tx/uart_tx.v",
+    "example/uart_tx/uart_tx_fifo.v"
+  ],
+  "output_dir": "example/uart_tx/output/",
+  "start_time": "2025-12-19T00:00:00Z",
+  "end_time": "2025-12-19T00:00:00Z",
+  "status": "completed",
+  "stages": [
+    {
+      "name": "STAGE_1",
+      "display_name": "文件头审查",
+      "status": "completed",
+      "check_ids": [1],
+      "file": "reports/stage_1_file_header.md"
+    },
+    {
+      "name": "STAGE_2",
+      "display_name": "信号及模块命名规则审查",
+      "status": "completed",
+      "check_ids": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      "file": "reports/stage_2_naming.md"
+    },
+    {
+      "name": "STAGE_3",
+      "display_name": "排版规则审查",
+      "status": "completed",
+      "check_ids": [13],
+      "file": "reports/stage_3_format.md"
+    },
+    {
+      "name": "STAGE_4_1",
+      "display_name": "模拟与时钟设计审查",
+      "status": "completed",
+      "check_ids": [14, 15],
+      "file": "reports/stage_4_design/stage_4_1_analog_clock.md"
+    },
+    {
+      "name": "STAGE_4_2",
+      "display_name": "状态机与复位设计审查",
+      "status": "completed",
+      "check_ids": [16, 17, 18, 19, 20, 21, 22, 23, 24],
+      "file": "reports/stage_4_design/stage_4_2_state_reset.md"
+    },
+    {
+      "name": "STAGE_4_3",
+      "display_name": "变量与赋值检查",
+      "status": "completed",
+      "check_ids": [25, 26, 27],
+      "file": "reports/stage_4_design/stage_4_3_variable_assign.md"
+    },
+    {
+      "name": "STAGE_4_4",
+      "display_name": "Case与语句检查",
+      "status": "completed",
+      "check_ids": [28],
+      "file": "reports/stage_4_design/stage_4_4_case.md"
+    },
+    {
+      "name": "STAGE_4_5",
+      "display_name": "时钟设计检查",
+      "status": "completed",
+      "check_ids": [29, 30, 31],
+      "file": "reports/stage_4_design/stage_4_5_clock.md"
+    },
+    {
+      "name": "STAGE_4_6",
+      "display_name": "逻辑运算检查",
+      "status": "completed",
+      "check_ids": [32, 33, 34, 35, 36, 37],
+      "file": "reports/stage_4_design/stage_4_6_logic_op.md"
+    },
+    {
+      "name": "STAGE_4_7",
+      "display_name": "变量声明检查",
+      "status": "completed",
+      "check_ids": [38, 39],
+      "file": "reports/stage_4_design/stage_4_7_var_decl.md"
+    },
+    {
+      "name": "STAGE_4_8",
+      "display_name": "循环与条件检查",
+      "status": "completed",
+      "check_ids": [40, 41, 42],
+      "file": "reports/stage_4_design/stage_4_8_loop_cond.md"
+    }
+  ],
+  "summary": {
+    "total_checks": 42,
+    "applicable_checks": 24,
+    "passed_checks": 23,
+    "failed_checks": 1,
+    "na_checks": 18,
+    "pass_rate_applicable": "95.8%",
+    "pass_rate_total": "54.8%"
+  }
+}

@@ -1,0 +1,403 @@
+我来帮你设计一个合适的code review工具架构。                                                                                                                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                                                                                                                                                                                                                        
+  ---                                                                                                                                                                                                                                                                                                                                                                                                                                   
+  📊 分析总结                                                                                                                                                                                                                                                                                                                                                                                                                           
+                                                                                                                                                                                                                                                                                                                                                                                                                                        
+  参考文章核心要点                                                                                                                                                                                                                                                                                                                                                                                                                      
+                                                                                                                                                                                                                                                                                                                                                                                                                                        
+  r0r1的文章（从搜索摘要和Ovidiu Eftimie相关文章推断）：                                                                                                                                                                                                                                                                                                                                                                                
+  - 从DIY到团队就绪：手动配置不可扩展，需要Claude Skills来统一管理                                                                                                                                                                                                                                                                                                                                                                      
+  - 一致性是关键：团队需要统一的审查标准                                                                                                                                                                                                                                                  
+  - CI集成：在PR/MR阶段自动触发审查                                                                                                                                                                                                                                                       
+                                                                                                                                                                                                                                                                                          
+  Ovidiu Eftimie的文章核心洞察：                                                                                                                                                                                                                                                          
+  1. 一致性 - AI需要可预测、可追踪的审查行为                                                                                                                                                                                                                                              
+  2. Token预算管理 - 使用ccstatusline等工具监控资源消耗                                                                                                                                                                                                                                   
+  3. 自动化的隐性成本：                                                                                                                                                                                                                                                                   
+    - 上下文缺失（AI无法访问团队的"叙事知识"）                                                                                                                                                                                                                                            
+    - 架构漂移（快速变更可能破坏设计原则）                                                                                                                                                                                                                                                
+    - 学习短路（直接给出答案阻碍团队建立心智模型）                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                                          
+  你的Verilog规范特点                                                                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                                                          
+  你的规范文件包含1363行详细规则，涵盖：                                                                                                                                                                                                                                                  
+  - 代码格式规范：文件头、命名、注释、排版                                                                                                                                                                                                                                                
+  - 电路设计规范：设计结构、时钟、复位、表达式、语句声明、可综合设计、状态机、跨时钟域、除法器、SRAM、模块划分                                                                                                                                                                            
+  - 明确的规则分级：[规则]和[建议]                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                                          
+  ---                                                                                                                                                                                                                                                                                     
+  🛠️ 推荐工具架构                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                          
+  基于以上分析，我建议构建一个分层式Claude Skill架构：                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                          
+  架构设计                                                                                                                                                                                                                                                                                
+                                                                                                                                                                                                                                                                                          
+  verilog-code-review/                                                                                                                                                                                                                                                                    
+  ├── skills/                                                                                                                                                                                                                                                                             
+  │   └── verilog_review/                                                                                                                                                                                                                                                                 
+  │       ├── skill.json          # Skill配置                                                                                                                                                                                                                                             
+  │       ├── prompts/                                                                                                                                                                                                                                                                    
+  │       │   ├── format.md       # 格式检查prompt                                                                                                                                                                                                                                        
+  │       │   ├── naming.md       # 命名检查prompt                                                                                                                                                                                                                                        
+  │       │   ├── design.md       # 设计规则检查prompt                                                                                                                                                                                                                                    
+  │       │   └── clock_reset.md  # 时钟复位专用检查                                                                                                                                                                                                                                      
+  │       ├── rules/                                                                                                                                                                                                                                                                      
+  │       │   └── verilog_standards.json  # 规则数据库                                                                                                                                                                                                                                    
+  │       └── output/                                                                                                                                                                                                                                                                     
+  │           └── template.md     # 输出模板                                                                                                                                                                                                                                              
+  ├── mcp_servers/                                                                                                                                                                                                                                                                        
+  │   └── verilog_parser/         # 可选：Verilog解析MCP                                                                                                                                                                                                                                  
+  └── config/                                                                                                                                                                                                                                                                             
+      └── review_config.yaml      # 审查配置                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                          
+  核心组件设计                                                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                                                                          
+  1. Skill配置文件 (skill.json)                                                                                                                                                                                                                                                           
+                                                                                                                                                                                                                                                                                          
+  {                                                                                                                                                                                                                                                                                       
+    "name": "verilog_code_review",                                                                                                                                                                                                                                                        
+    "description": "Review Verilog RTL code against team coding standards",                                                                                                                                                                                                               
+    "version": "1.0.0",                                                                                                                                                                                                                                                                   
+    "author": "Your Team",                                                                                                                                                                                                                                                                
+    "capabilities": [                                                                                                                                                                                                                                                                     
+      "code_review",                                                                                                                                                                                                                                                                      
+      "rule_checking",                                                                                                                                                                                                                                                                    
+      "suggestion_generation"                                                                                                                                                                                                                                                             
+    ],                                                                                                                                                                                                                                                                                    
+    "tools": [                                                                                                                                                                                                                                                                            
+      "read_file",                                                                                                                                                                                                                                                                        
+      "grep",                                                                                                                                                                                                                                                                             
+      "glob"                                                                                                                                                                                                                                                                              
+    ],                                                                                                                                                                                                                                                                                    
+    "max_tokens": 100000,                                                                                                                                                                                                                                                                 
+    "temperature": 0.1                                                                                                                                                                                                                                                                    
+  }                                                                                                                                                                                                                                                                                       
+                                                                                                                                                                                                                                                                                          
+  2. 规则数据库 (verilog_standards.json)                                                  
+2. 规则数据库 (verilog_standards.json)                                                                                                                                                                                                                                                                                                                                                                                                
+                                                                                                                                                                                                                                                                                                                                                                                                                                        
+  将你的规范转换为结构化JSON：                                                                            
+
+  {                                                                                                       
+    "format_rules": {                                                                                     
+      "file_header": {                                                                                    
+        "level": "R",                                                                                     
+        "rule": "所有Verilog代码都需要有文件头",                                                          
+        "fields": ["filename", "author", "created", "description", "history"]                                                                                                                                       
+      },                                                                                                  
+      "indentation": {                                                                                    
+        "level": "S",                                                                                     
+        "rule": "缩进使用Space而非Tab，建议4个Space"                                                      
+      },                                                                                                  
+      "line_length": {                                                                                    
+        "level": "S",                                                                                     
+        "rule": "每行小于等于120个字符",                                                                  
+        "max_length": 120                                                                                 
+      }                                                                                                   
+    },                                                                                                    
+    "naming_rules": {                                                                                     
+      "signal_naming": {                                                                                  
+        "level": "S",                                                                                     
+        "rules": [                                                                                        
+          "直观、简洁、有含义",                                                                           
+          "使用下划线分隔不同含义",                                                                       
+          "不超过30字符",                                                                                 
+          "只允许字母数字下划线",                                                                         
+          "字母开头",                                                                                     
+          "小写命名",                                                                                     
+          "不使用保留字"                                                                                  
+        ]                                                                                                 
+      },                                                                                                  
+      "suffixes": {                                                                                       
+        "_n": "低有效",                                                                                   
+        "_clk": "时钟信号",                                                                               
+        "_en": "使能",                                                                                    
+        "_r": "打拍寄存器"                                                                                
+      },                                                                                                  
+      "abbreviations": {                                                                                  
+        "clk": "clock",                                                                                   
+        "rst": "reset",                                                                                   
+        "en": "enable",                                                                                   
+        "vld": "valid",                                                                                   
+        "addr": "address"                                                                                 
+      }                                                                                                   
+    },                                                                                                    
+    "design_rules": {                                                                                     
+      "sequential_logic": {                                                                               
+        "level": "R",                                                                                     
+        "rules": [                                                                                        
+          "使用非阻塞赋值<=",                                                                             
+          "同一寄存器不能在多个always块中赋值",                                                           
+          "不能对同一变量覆盖赋值（应使用else if）"                                                       
+        ]                                                                                                 
+      },                                                                                                  
+      "combinational_logic": {                                                                            
+        "level": "R",                                                                                     
+        "rules": [                                                                                        
+          "使用阻塞赋值=",                                                                                
+          "敏感列表要列全（可用always @(*)）",                                                            
+          "避免产生Latch（需要default或完整条件）"                                                        
+        ]                                                                                                 
+      },                                                                                                  
+      "clock_design": {                                                                                   
+        "level": "R",                                                                                     
+        "rules": [                                                                                        
+          "禁止在内部模块中使用组合逻辑产生时钟",                                                         
+          "时钟信号只能连接到寄存器时钟端",                                                               
+          "每个always块只允许一个clock"                                                                   
+        ]                                                                                                 
+      },                                                                                                  
+      "reset_design": {                                                                                   
+        "level": "R",                                                                                     
+        "rules": [                                                                                        
+          "采用异步复位",                                                                                 
+          "复位信号应为低电平有效",                                                                       
+          "复位值必须是常量"                                                                              
+        ]                                                                                                 
+      }                                                                                                   
+    }                                                                             3. 分阶段Prompt设计                                                                                     
+
+  阶段1：格式检查 (prompts/format.md)                                                                     
+
+  # Verilog代码格式审查                                                                                   
+
+  ## 任务                                                                                                 
+  审查Verilog代码的格式是否符合规范要求。                                                                 
+
+  ## 审查项目                                                                                             
+  1. 文件头完整性（filename, author, created, description, history）                                      
+  2. 缩进是否使用空格（非Tab）                                                                            
+  3. 行长度是否≤120字符                                                                                   
+  4. 信号定义对齐                                                                                         
+  5. 模块例化对齐                                                                                         
+
+  ## 输出格式                                                                                             
+  对每个问题，提供：                                                                                      
+  - 文件位置（行号）                                                                                      
+  - 违反的规则                                                                                            
+  - 级别（Rule/Suggestion）                                                                               
+  - 修改建议                                                                                              
+
+  ## 规则来源                                                                                             
+  参考：Verilog_RTL_Coding_Standards-v1.4.3.md 第5条                                                      
+
+  阶段2：命名检查 (prompts/naming.md)                                                                     
+
+  # Verilog命名规范审查                                                                                   
+
+  ## 任务                                                                                                 
+  检查信号、端口、参数、宏定义的命名规范。                                                                
+
+  ## 检查项                                                                                               
+  1. 信号命名是否符合规范（小写、下划线、有含义）                                                         
+  2. 是否使用标准缩写（参考abbreviations表）                                                              
+  3. 后缀使用是否正确（_n, _clk, _en, _r等）                                                              
+  4. 是否超过30字符                                                                                       
+  5. 是否使用了保留字                                                                                     
+  6. 宏定义是否全大写                                                                                     
+  7. parameter是否全大写                                                                                  
+
+  ## 输出格式                                                                                             
+  - 信号名称                                                                                              
+  - 位置（模块名:行号）                                                                                   
+  - 问题类型                                                                                              
+  - 建议的命名                                                                                            
+
+  阶段3：设计规则检查 (prompts/design.md)                                                                 
+
+  # Verilog设计规则审查                                                                                   
+
+  ## 任务                                                                                                 
+  检查代码中的设计规则违反情况。                                                                          
+
+  ## 关键检查区域                                                                                         
+
+  ### 时序逻辑                                                                                            
+  - [ ] 使用非阻塞赋值<=                                                                                  
+  - [ ] 无同一寄存器多处赋值                                                                              
+  - [ ] 无覆盖式赋值（应使用else if）                                                                     
+  - [ ] 复位逻辑使用else if                                                                               
+
+  ### 组合逻辑                                                                                            
+  - [ ] 使用阻塞赋值=                                                                                     
+  - [ ] 敏感列表完整（always @(*)）                                                                       
+  - [ ] 无Latch产生（default/完整条件）                                                                   
+  - [ ] 避免组合逻辑反馈回路                                                                              
+
+  ### 时钟设计                                                                                            
+  - [ ] 无组合逻辑产生时钟                                                                                
+  - [ ] 时钟只接寄存器时钟端                                                                              
+  - [ ] 单always块单clock                                                                                 
+
+  ### 复位设计                                                                                            
+  - [ ] 异步复位低电平有效                                                                                
+  - [ ] 复位值为常量                                                                                      
+  - [ ] 多变量复位完整                                                                                    
+
+  ## 输出格式                                                                                             
+  分类输出，标注严重程度（Critical/Error/Warning/Info）                                                   
+
+  阶段4：专用深度检查 (prompts/clock_reset.md)                                                            
+
+阶段4：专用深度检查 (prompts/clock_reset.md)                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                        
+  # 时钟和复位专项审查                                                                                                                                                                                                                                                                                                                                                                                                                  
+                                                                                                          
+  ## 任务                                                                                                 
+  对时钟和复位设计进行深度检查，这些是芯片设计的critical部分。                                            
+                                                                                                          
+  ## 检查清单                                                                                             
+                                                                                                          
+  ### 时钟域                                                                                              
+  - [ ] 跨时钟域信号是否使用common_sync                                                                   
+  - [ ] 单bit信号至少两级寄存器同步                                                                       
+  - [ ] 跨时钟域第一级后缀为_asyn                                                                         
+  - [ ] 无组合逻辑输出跨时钟域                                                                            
+  - [ ] 时序对齐操作在跨时钟域前完成                                                                      
+                                                                                                          
+  ### 复位                                                                                                
+  - [ ] 跨时钟域复位先同步                                                                                
+  - [ ] scan模式下复位可bypass                                                                            
+  - [ ] 无同步异步复位组合逻辑                                                                            
+  - [ ] 单bit控制信号需要复位                                                                             
+  - [ ] 单always块不超过1个复位                                                                           
+                                                                                                          
+  ## 输出要求                                                                                             
+  对每个潜在问题，提供：                                                                                  
+  - 风险等级（Critical/High/Medium/Low）                                                                  
+  - 可能的故障场景                                                                                        
+  - 推荐修复方案                                                                                          
+  - 参考规范条款                                                                                          
+                                                                                                          
+  4. 输出模板 (template.md)                                                                               
+
+  # Verilog Code Review Report                                                                            
+                                                                                                          
+  ## 文件信息                                                                                             
+  - 文件：{{filename}}                                                                                    
+  - 审查时间：{{timestamp}}                                                                               
+  - 审查规则版本：Verilog_RTL_Coding_Standards-v1.4.3                                                     
+                                                                                                          
+  ## 执行摘要                                                                                             
+  - Critical: {{critical_count}}                                                                          
+  - Error: {{error_count}}                                                                                
+  - Warning: {{warning_count}}                                                                            
+  - Suggestion: {{suggestion_count}}                                                                      
+
+  ## 详细发现                                                                                             
+
+  ### Critical Issues                                                                                     
+  {{#critical_issues}}                                                                                    
+  #### [{{id}}] {{title}}                                                                                 
+  - **位置**: Line {{line}}                                                                               
+  - **规则**: {{rule_reference}}                                                                          
+  - **描述**: {{description}}                                                                             
+  - **风险**: {{risk}}                                                                                    
+  - **修复建议**:                                                                                         
+  ```verilog                                                                                              
+  {{suggested_code}}                                                                                      
+  {{/critical_issues}}                                                                                    
+
+  Errors                                                                                                  
+
+  {{#error_issues}}                                                                                       
+  ...                                                                                                     
+
+  Warnings                                                                                                
+
+  {{#warning_issues}}                                                                                     
+  ...                                                                                                     
+
+  Suggestions                                                                                             
+
+  {{#suggestion_issues}}                                                                                  
+  ...                                                                                                     
+
+  统计信息                                                                                                
+
+  - 总检查项：{{total_checks}}                                                                            
+  - 通过：{{passed}}                                                                                      
+  - 失败：{{failed}}                                                                                      
+  - 通过率：{{pass_rate}}%                                                                                
+
+  ---                                                                                                     
+
+  ## 🔧 实现建议                                              ## 🔧 实现建议                                                                                          
+
+  ### 方案A：Claude Code Skill（推荐用于团队）                                                            
+
+  **优点**：                                                                                              
+  - 团队统一版本管理                                                                                      
+  - 自动更新推送                                                                                          
+  - 与Claude Code深度集成                                                                                 
+
+  **实现步骤**：                                                                                          
+
+  1. 创建Skill目录结构                                                                                    
+  2. 编写上述配置文件和prompt                                                                             
+  3. 在团队中共享Skill                                                                                    
+  4. 配置CI/CD集成                                                                                        
+
+  **命令示例**：                                                                                          
+  ```bash                                                                                                 
+  # 创建Skill                                                                                             
+  claude skill create verilog-review                                                                      
+
+  # 测试Skill                                                                                             
+  claude skill run verilog-review --file rtl_module.v                                                     
+
+  # 更新Skill                                                                                             
+  claude skill update verilog-review                                                                      
+
+  方案B：MCP Server + 自定义命令                                                                          
+
+  优点：                                                                                                  
+  - 更灵活的自定义能力                                                                                    
+  - 可集成Verilog解析器                                                                                   
+  - 更好的性能控制                                                                                        
+
+  实现步骤：                                                                                              
+
+  1. 创建MCP Server提供Verilog解析能力                                                                    
+  2. 创建自定义命令调用Skill                                                                              
+  3. 配置token监控（参考ccstatusline）                                                                    
+
+  ---                                                                                                     
+  📋 Token预算管理建议                                                                                    
+
+  根据Ovidiu Eftimie的经验：                                                                              
+
+  # review_config.yaml                                                                                    
+  token_budget:                                                                                           
+    max_per_file: 50000                                                                                   
+    max_per_review: 150000                                                                                
+    warning_threshold: 0.8                                                                                
+
+  stages:                                                                                                 
+    - name: format_check                                                                                  
+      max_tokens: 10000                                                                                   
+      parallel: true                                                                                      
+
+    - name: naming_check                                                                                  
+      max_tokens: 15000                                                                                   
+      parallel: true                                                                                      
+
+    - name: design_check                                                                                  
+      max_tokens: 40000                                                                                   
+      parallel: false                                                                                     
+
+    - name: clock_reset_deep_check                                                                        
+      max_tokens: 30000                                                                                   
+      parallel: false                                                                                     
+
+  ---                                                                                                     
+  🎯 下一步建议                                                                                           
+
+  1. 从简单开始：先实现格式和命名检查（可快速见效）                                                       
+  2. 渐进增强：逐步添加设计规则检查                                                                       
+  3. 收集反馈：记录误报和漏报，持续优化prompt                                                             
+  4. 版本控制：将Skill配置纳入Git管理                                                                     
+  5. 团队培训：分享使用方法，解释审查逻辑                    
+
+
+	好的，依靠你上面分析的方案，采用方案A为我实现skill "verilog-code-review",我们团队统一的verilog代码审查标准即为Verilog_RTL_Coding_Standards-v1.4.3.md文件。当skill构建完成后，你需要调用构建好的skill，对uart_tx中的.v文件完成code review

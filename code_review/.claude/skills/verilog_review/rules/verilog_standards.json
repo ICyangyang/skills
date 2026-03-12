@@ -1,0 +1,604 @@
+{
+  "rules": [
+    {
+      "id": 1,
+      "category": "文件头",
+      "level": "R",
+      "check_item": "文件头内容检查",
+      "check_method": "文件头中是否包含文件名、作者、其创建时间与概要描述",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第5条",
+      "stage": "STAGE_1",
+      "expected_value": "是",
+      "regex_pattern": null
+    },
+    {
+      "id": 2,
+      "category": "信号及模块命名规则",
+      "level": "S",
+      "check_item": "不同含义段分隔方式检查",
+      "check_method": "命名中不同含义段之间是否使用下划线\"_\"来进行分隔",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第6条",
+      "stage": "STAGE_2",
+      "expected_value": "是",
+      "regex_pattern": null
+    },
+    {
+      "id": 3,
+      "category": "信号及模块命名规则",
+      "level": "S",
+      "check_item": "字符检查",
+      "check_method": "命名中是否只出现字母数字和下划线",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第6条",
+      "stage": "STAGE_2",
+      "expected_value": "是",
+      "regex_pattern": "^[a-zA-Z0-9_]+$"
+    },
+    {
+      "id": 4,
+      "category": "信号及模块命名规则",
+      "level": "S",
+      "check_item": "开头字符检查",
+      "check_method": "命名是否是字母开头",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第6条",
+      "stage": "STAGE_2",
+      "expected_value": "是",
+      "regex_pattern": "^[a-zA-Z]"
+    },
+    {
+      "id": 5,
+      "category": "信号及模块命名规则",
+      "level": "S",
+      "check_item": "大小写字符检查",
+      "check_method": "命名是否存在通过大小写来区分的情况",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第6条",
+      "stage": "STAGE_2",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 6,
+      "category": "信号及模块命名规则",
+      "level": "S",
+      "check_item": "多bit定义方式检查",
+      "check_method": "定义多bit总线是否使用降序[N-1:0]格式（避免使用升序[0:N-1]）",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第6条",
+      "stage": "STAGE_2",
+      "expected_value": "是（应使用降序 [N-1:0]）",
+      "regex_pattern": "\\[\\d+:0\\]|\\[\\d+-1:0\\]"
+    },
+    {
+      "id": 7,
+      "category": "信号及模块命名规则",
+      "level": "S",
+      "check_item": "宏定义检查",
+      "check_method": "所有的宏定义是否是大写",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第6条",
+      "stage": "STAGE_2",
+      "expected_value": "是",
+      "regex_pattern": "`define\\s+[A-Z0-9_]+"
+    },
+    {
+      "id": 8,
+      "category": "信号及模块命名规则",
+      "level": "R",
+      "check_item": "例化位置端口映射检查",
+      "check_method": "模块例化时是否存在使用位置端口映射",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第7条",
+      "stage": "STAGE_2",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 9,
+      "category": "信号及模块命名规则",
+      "level": "R",
+      "check_item": "例化逻辑操作检查",
+      "check_method": "模块例化时是否进行逻辑操作",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第7条",
+      "stage": "STAGE_2",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 10,
+      "category": "信号及模块命名规则",
+      "level": "R",
+      "check_item": "例化端口完整性检查",
+      "check_method": "模块例化时是否缺少端口",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第7条",
+      "stage": "STAGE_2",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 11,
+      "category": "信号及模块命名规则",
+      "level": "S",
+      "check_item": "例化参数检查",
+      "check_method": "例化单独harden的模块或者IP时，是否存在parameter的传入",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第7条",
+      "stage": "STAGE_2",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 12,
+      "category": "信号及模块命名规则",
+      "level": "S",
+      "check_item": "例化参数显式性检查",
+      "check_method": "当例化的IP在多个模块被使用时，是否对parameter进行显式例化",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第7条",
+      "stage": "STAGE_2",
+      "expected_value": "是",
+      "regex_pattern": null
+    },
+    {
+      "id": 13,
+      "category": "排版规则",
+      "level": "S",
+      "check_item": "排版缩进方式检查",
+      "check_method": "是否用Space（空格）而非 Tab来进行缩进",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第8条",
+      "stage": "STAGE_3",
+      "expected_value": "是",
+      "regex_pattern": "\\t"
+    },
+    {
+      "id": 14,
+      "category": "电路设计规范",
+      "level": "S",
+      "check_item": "模拟信号连接检查",
+      "check_method": "模拟信号连接中间是否插入buffer",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第9条",
+      "stage": "STAGE_4_1",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 15,
+      "category": "电路设计规范",
+      "level": "S",
+      "check_item": "跨时钟域调用IP检查",
+      "check_method": "跨时钟域设计是否都是用common IP",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第9条",
+      "stage": "STAGE_4_1",
+      "expected_value": "是",
+      "regex_pattern": null
+    },
+    {
+      "id": 16,
+      "category": "电路设计规范",
+      "level": "R",
+      "check_item": "状态机状态定义检查",
+      "check_method": "状态机状态是否使用localparam来定义（而非parameter，防止被外部例化修改）",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第7条",
+      "stage": "STAGE_4_2",
+      "expected_value": "是",
+      "regex_pattern": "localparam\\s+(ST_)?[A-Z0-9_]+\\s*=",
+      "details": {
+        "description": "状态机的状态必须使用localparam定义，而非parameter。原因是防止状态被外部例化时修改，保证状态机行为的确定性。",
+        "example_valid": "localparam ST_IDLE = 3'b001;\nlocalparam ST_WORK = 3'b010;",
+        "example_invalid": "parameter ST_IDLE = 3'b001; // 应使用localparam"
+      }
+    },
+    {
+      "id": 17,
+      "category": "电路设计规范",
+      "level": "S",
+      "check_item": "寄存器复位方式检查",
+      "check_method": "寄存器是否采用异步复位",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第10条",
+      "stage": "STAGE_4_2",
+      "expected_value": "是",
+      "regex_pattern": null
+    },
+    {
+      "id": 18,
+      "category": "电路设计规范",
+      "level": "S",
+      "check_item": "寄存器复位值检查",
+      "check_method": "寄存器的复位值是否是常量",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第10条",
+      "stage": "STAGE_4_2",
+      "expected_value": "是",
+      "regex_pattern": null
+    },
+    {
+      "id": 19,
+      "category": "电路设计规范",
+      "level": "S",
+      "check_item": "多变量寄存器复位检查",
+      "check_method": "多变量在一个时序always块时，是否所有的变量都被复位",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第10条",
+      "stage": "STAGE_4_2",
+      "expected_value": "是",
+      "regex_pattern": null
+    },
+    {
+      "id": 20,
+      "category": "电路设计规范",
+      "level": "R",
+      "check_item": "复位信号逻辑检查",
+      "check_method": "是否存在同步复位和异步复位信号的组合逻辑",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第10条",
+      "stage": "STAGE_4_2",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 21,
+      "category": "电路设计规范",
+      "level": "S",
+      "check_item": "复位信号使用前检查",
+      "check_method": "复位信号跨时钟域时，是否先做同步再使用",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第10条",
+      "stage": "STAGE_4_2",
+      "expected_value": "是",
+      "regex_pattern": null
+    },
+    {
+      "id": 22,
+      "category": "电路设计规范",
+      "level": "R",
+      "check_item": "复位信号数量检查",
+      "check_method": "一个always块中复位信号是否超过1个",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第10条",
+      "stage": "STAGE_4_2",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 23,
+      "category": "电路设计规范",
+      "level": "R",
+      "check_item": "组合逻辑复位检查",
+      "check_method": "组合逻辑是否存在复位",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第10条",
+      "stage": "STAGE_4_2",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 24,
+      "category": "电路设计规范",
+      "level": "S",
+      "check_item": "复位条件写法检查",
+      "check_method": "是否存在复位if条件后再使用if而不是else if",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第10条",
+      "stage": "STAGE_4_2",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 25,
+      "category": "电路设计规范",
+      "level": "S",
+      "check_item": "变量声明检查",
+      "check_method": "信号声明时是否存在赋值",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第11条",
+      "stage": "STAGE_4_3",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 26,
+      "category": "电路设计规范",
+      "level": "S",
+      "check_item": "变量声明冲突性检查",
+      "check_method": "局部变量名和全局变量名是否发生冲突",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第11条",
+      "stage": "STAGE_4_3",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 27,
+      "category": "电路设计规范",
+      "level": "R",
+      "check_item": "变量赋值检查",
+      "check_method": "赋值语句中是否使用\"X\"或是\"Z\"",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第11条",
+      "stage": "STAGE_4_3",
+      "expected_value": "否",
+      "regex_pattern": "[=<>]=\\s*[xzXZ]"
+    },
+    {
+      "id": 28,
+      "category": "电路设计规范",
+      "level": "R",
+      "check_item": "Case语句检查",
+      "check_method": "是否使用casex语句",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第12条",
+      "stage": "STAGE_4_4",
+      "expected_value": "否",
+      "regex_pattern": "\\bcasex\\b"
+    },
+    {
+      "id": 29,
+      "category": "电路设计规范",
+      "level": "R",
+      "check_item": "时钟来源检查",
+      "check_method": "时钟是否来源于模块内部组合逻辑",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第13条",
+      "stage": "STAGE_4_5",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 30,
+      "category": "电路设计规范",
+      "level": "R",
+      "check_item": "时钟用途检查",
+      "check_method": "时钟是否被当做数据用于赋值",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第13条",
+      "stage": "STAGE_4_5",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 31,
+      "category": "电路设计规范",
+      "level": "S",
+      "check_item": "时钟通路检查",
+      "check_method": "时钟通路上的cell是否为clock专用cell",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第13条",
+      "stage": "STAGE_4_5",
+      "expected_value": "是",
+      "regex_pattern": null
+    },
+    {
+      "id": 32,
+      "category": "电路设计规范",
+      "level": "R",
+      "check_item": "逻辑运算表达式检查",
+      "check_method": "是否存在使用\"?\"作为常量匹配",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第14条",
+      "stage": "STAGE_4_6",
+      "expected_value": "否",
+      "regex_pattern": "==\\s*\\?"
+    },
+    {
+      "id": 33,
+      "category": "电路设计规范",
+      "level": "S",
+      "check_item": "逻辑运算表达式检查",
+      "check_method": "是否存在位宽不匹配的变量间进行逻辑运算",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第14条",
+      "stage": "STAGE_4_6",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 34,
+      "category": "电路设计规范",
+      "level": "S",
+      "check_item": "算术运算表达式检查",
+      "check_method": "是否存在有符号变量和无符号变量间进行多目运算",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第14条",
+      "stage": "STAGE_4_6",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 35,
+      "category": "电路设计规范",
+      "level": "S",
+      "check_item": "条件检查",
+      "check_method": "条件语句是否存在永远不能满足的条件分支",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第14条",
+      "stage": "STAGE_4_6",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 36,
+      "category": "电路设计规范",
+      "level": "R",
+      "check_item": "逻辑运算表达式检查",
+      "check_method": "逻辑比较操作中是否使用\"X\"或\"Z\"",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第14条",
+      "stage": "STAGE_4_6",
+      "expected_value": "否",
+      "regex_pattern": "==\\s*[xzXZ]|!=\\s*[xzXZ]"
+    },
+    {
+      "id": 37,
+      "category": "电路设计规范",
+      "level": "S",
+      "check_item": "条件检查",
+      "check_method": "条件语句中条件是否使用算术表达式",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第14条",
+      "stage": "STAGE_4_6",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 38,
+      "category": "电路设计规范",
+      "level": "S",
+      "check_item": "变量声明检查",
+      "check_method": "一行是否存在多个变量的赋值表达式",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第15条",
+      "stage": "STAGE_4_7",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 39,
+      "category": "电路设计规范",
+      "level": "S",
+      "check_item": "变量声明检查",
+      "check_method": "变量声明是否进行赋值",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第15条",
+      "stage": "STAGE_4_7",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 40,
+      "category": "电路设计规范",
+      "level": "R",
+      "check_item": "循环语句检查",
+      "check_method": "循环语句过程中是否存在对index的修改",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第16条",
+      "stage": "STAGE_4_8",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 41,
+      "category": "电路设计规范",
+      "level": "S",
+      "check_item": "for语句检查",
+      "check_method": "for循环条件范围是否出现变量",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第16条",
+      "stage": "STAGE_4_8",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 42,
+      "category": "电路设计规范",
+      "level": "S",
+      "check_item": "Case语句检查",
+      "check_method": "Case分支条件是否存在变量",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第12条",
+      "stage": "STAGE_4_8",
+      "expected_value": "否",
+      "regex_pattern": null
+    },
+    {
+      "id": 43,
+      "category": "电路设计规范",
+      "level": "S",
+      "check_item": "状态机命名检查",
+      "check_method": "状态机状态命名是否使用ST_前缀",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第7条",
+      "stage": "STAGE_4_2",
+      "expected_value": "是",
+      "regex_pattern": "localparam\\s+ST_[A-Z0-9_]+",
+      "details": {
+        "description": "状态机状态命名应使用ST_前缀，便于识别和维护。",
+        "example_valid": "localparam ST_IDLE = 3'b001;\nlocalparam ST_PROCESS = 3'b010;\nlocalparam ST_END = 3'b100;",
+        "example_invalid": "localparam IDLE = 3'b001; // 应使用ST_前缀"
+      }
+    },
+    {
+      "id": 44,
+      "category": "电路设计规范",
+      "level": "R",
+      "check_item": "状态机结构检查",
+      "check_method": "状态机是否采用两段式写法（一个时序always块用于状态寄存，一个组合always块用于次态逻辑和输出）",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第7条",
+      "stage": "STAGE_4_2",
+      "expected_value": "是",
+      "regex_pattern": null,
+      "details": {
+        "description": "状态机应采用两段式写法：(1) 时序always块：负责状态寄存，在时钟边沿更新当前状态；(2) 组合always块：根据当前状态和输入计算次态和输出。",
+        "example_valid": "// 时序块\nalways @(posedge clk or negedge rst_n)\n    if(~rst_n) cur_state <= ST_IDLE;\n    else cur_state <= nxt_state;\n\n// 组合块\nalways @(*) begin\n    nxt_state = cur_state;\n    case(cur_state) ...\nend",
+        "example_invalid": "// 单段式写法不推荐\nalways @(posedge clk or negedge rst_n) begin\n    if(~rst_n) ...\n    else case(cur_state) ...\nend"
+      }
+    },
+    {
+      "id": 45,
+      "category": "电路设计规范",
+      "level": "R",
+      "check_item": "状态机默认状态检查",
+      "check_method": "状态机case语句中是否有default分支指定默认状态",
+      "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第7条",
+      "stage": "STAGE_4_2",
+      "expected_value": "是",
+      "regex_pattern": null,
+      "details": {
+        "description": "状态机必须有default条件，为状态机指定一个默认状态，防止状态机进入死锁状态。",
+        "example_valid": "case(cur_state)\n    ST_IDLE: ...\n    ST_PROCESS: ...\n    default: nxt_state = ST_IDLE;\nendcase",
+        "example_invalid": "case(cur_state)\n    ST_IDLE: ...\n    ST_PROCESS: ...\n    // 缺少default分支\nendcase"
+      }
+    }
+  ],
+  "stage_mapping": {
+    "STAGE_1": {
+      "name": "文件头审查",
+      "check_ids": [1],
+      "desc": "文件头内容检查"
+    },
+    "STAGE_2": {
+      "name": "信号及模块命名规则审查",
+      "check_ids": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      "desc": "命名规则和模块例化检查"
+    },
+    "STAGE_3": {
+      "name": "排版规则审查",
+      "check_ids": [13],
+      "desc": "代码排版和格式检查"
+    },
+    "STAGE_4_1": {
+      "name": "模拟与时钟设计审查",
+      "check_ids": [14, 15],
+      "desc": "模拟信号和跨时钟域检查"
+    },
+    "STAGE_4_2": {
+      "name": "状态机与复位设计审查",
+      "check_ids": [16, 17, 18, 19, 20, 21, 22, 23, 24, 43, 44, 45],
+      "desc": "状态机和复位处理检查"
+    },
+    "STAGE_4_3": {
+      "name": "变量与赋值检查",
+      "check_ids": [25, 26, 27],
+      "desc": "变量声明和赋值检查"
+    },
+    "STAGE_4_4": {
+      "name": "Case与语句检查",
+      "check_ids": [28],
+      "desc": "Case语句使用检查"
+    },
+    "STAGE_4_5": {
+      "name": "时钟设计检查",
+      "check_ids": [29, 30, 31],
+      "desc": "时钟来源和使用检查"
+    },
+    "STAGE_4_6": {
+      "name": "逻辑运算检查",
+      "check_ids": [32, 33, 34, 35, 36, 37],
+      "desc": "逻辑和算术运算表达式检查"
+    },
+    "STAGE_4_7": {
+      "name": "变量声明检查",
+      "check_ids": [38, 39],
+      "desc": "变量声明格式检查"
+    },
+    "STAGE_4_8": {
+      "name": "循环与条件检查",
+      "check_ids": [40, 41, 42],
+      "desc": "循环和Case分支条件检查"
+    }
+  },
+  "category_mapping": {
+    "all": ["stage_1", "stage_2", "stage_3", "stage_4_1", "stage_4_2", "stage_4_3", "stage_4_4", "stage_4_5", "stage_4_6", "stage_4_7", "stage_4_8"],
+    "file_header": ["stage_1"],
+    "naming": ["stage_2"],
+    "format": ["stage_3"],
+    "design": ["stage_4_1", "stage_4_2", "stage_4_3", "stage_4_4", "stage_4_5", "stage_4_6", "stage_4_7", "stage_4_8"],
+    "stage_1": ["stage_1"],
+    "stage_2": ["stage_2"],
+    "stage_3": ["stage_3"],
+    "stage_4": ["stage_4_1", "stage_4_2", "stage_4_3", "stage_4_4", "stage_4_5", "stage_4_6", "stage_4_7", "stage_4_8"],
+    "stage_4_1": ["stage_4_1"],
+    "stage_4_2": ["stage_4_2"],
+    "stage_4_3": ["stage_4_3"],
+    "stage_4_4": ["stage_4_4"],
+    "stage_4_5": ["stage_4_5"],
+    "stage_4_6": ["stage_4_6"],
+    "stage_4_7": ["stage_4_7"],
+    "stage_4_8": ["stage_4_8"]
+  },
+  "metadata": {
+    "version": "v1.4.3",
+    "total_checks": 45,
+    "categories": ["文件头", "信号及模块命名规则", "排版规则", "电路设计规范"],
+    "levels": {
+      "R": "Rule - 必须遵守",
+      "S": "Suggestion - 推荐遵守"
+    }
+  }
+}

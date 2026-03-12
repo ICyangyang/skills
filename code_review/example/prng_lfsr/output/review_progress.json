@@ -1,0 +1,428 @@
+{
+  "review_info": {
+    "review_type": "完整审查",
+    "target_files": [
+      "example/prng_lfsr/prng_lfsr.v"
+    ],
+    "timestamp": "2025-01-15T00:00:00Z",
+    "reviewer": "Verilog RTL Coding Standards Reviewer",
+    "standards_version": "v1.4.3"
+  },
+  "stages": [
+    {
+      "stage_id": "STAGE_1",
+      "stage_name": "文件头审查",
+      "status": "completed",
+      "check_items": [
+        {
+          "id": 1,
+          "category": "文件头",
+          "level": "R",
+          "check_item": "文件头内容检查",
+          "check_method": "文件头中是否包含文件名、作者、其创建时间与概要描述",
+          "reference": "Verilog_RTL_Coding_Standards-v1.4.3.md 第5条",
+          "result": "❌ 未通过",
+          "details": "文件头不完整。当前只有简单注释：'// 4位伪随机码发生器（基于LFSR，模2加反馈）'，缺少必需的文件名、作者、创建时间与概要描述。"
+        }
+      ]
+    },
+    {
+      "stage_id": "STAGE_2",
+      "stage_name": "信号及模块命名规则审查",
+      "status": "completed",
+      "check_items": [
+        {
+          "id": 2,
+          "category": "信号及模块命名规则",
+          "level": "S",
+          "check_item": "不同含义段分隔方式检查",
+          "result": "✅ 通过",
+          "details": "模块名'prng_lfsr'和信号名'clk', 'res', 'y', 'd'都是单个词，无需分隔符，符合要求。"
+        },
+        {
+          "id": 3,
+          "category": "信号及模块命名规则",
+          "level": "S",
+          "check_item": "字符检查",
+          "result": "✅ 通过",
+          "details": "所有命名仅包含字母，符合规范要求。"
+        },
+        {
+          "id": 4,
+          "category": "信号及模块命名规则",
+          "level": "S",
+          "check_item": "开头字符检查",
+          "result": "✅ 通过",
+          "details": "所有命名都是字母开头。"
+        },
+        {
+          "id": 5,
+          "category": "信号及模块命名规则",
+          "level": "S",
+          "check_item": "大小写字符检查",
+          "result": "✅ 通过",
+          "details": "不存在通过大小写来区分不同含义的情况。"
+        },
+        {
+          "id": 6,
+          "category": "信号及模块命名规则",
+          "level": "S",
+          "check_item": "多bit定义方式检查",
+          "result": "✅ 通过",
+          "details": "使用降序[3:0]格式，符合规范。"
+        },
+        {
+          "id": 7,
+          "category": "信号及模块命名规则",
+          "level": "S",
+          "check_item": "宏定义检查",
+          "result": "✅ 通过",
+          "details": "代码中无宏定义，不适用此检查项。"
+        },
+        {
+          "id": 8,
+          "category": "信号及模块命名规则",
+          "level": "R",
+          "check_item": "例化位置端口映射检查",
+          "result": "✅ 通过",
+          "details": "代码中无模块例化，不适用此检查项。"
+        },
+        {
+          "id": 9,
+          "category": "信号及模块命名规则",
+          "level": "R",
+          "check_item": "例化逻辑操作检查",
+          "result": "✅ 通过",
+          "details": "代码中无模块例化，不适用此检查项。"
+        },
+        {
+          "id": 10,
+          "category": "信号及模块命名规则",
+          "level": "R",
+          "check_item": "例化端口完整性检查",
+          "result": "✅ 通过",
+          "details": "代码中无模块例化，不适用此检查项。"
+        },
+        {
+          "id": 11,
+          "category": "信号及模块命名规则",
+          "level": "S",
+          "check_item": "例化参数检查",
+          "result": "✅ 通过",
+          "details": "代码中无模块例化，不适用此检查项。"
+        },
+        {
+          "id": 12,
+          "category": "信号及模块命名规则",
+          "level": "S",
+          "check_item": "例化参数显式性检查",
+          "result": "✅ 通过",
+          "details": "代码中无模块例化，不适用此检查项。"
+        }
+      ]
+    },
+    {
+      "stage_id": "STAGE_3",
+      "stage_name": "排版规则审查",
+      "status": "completed",
+      "check_items": [
+        {
+          "id": 13,
+          "category": "排版规则",
+          "level": "S",
+          "check_item": "排版缩进方式检查",
+          "result": "✅ 通过",
+          "details": "使用空格缩进，未使用Tab字符。"
+        }
+      ]
+    },
+    {
+      "stage_id": "STAGE_4_1",
+      "stage_name": "模拟与时钟设计审查",
+      "status": "completed",
+      "check_items": [
+        {
+          "id": 14,
+          "category": "电路设计规范",
+          "level": "S",
+          "check_item": "模拟信号连接检查",
+          "result": "✅ 通过",
+          "details": "代码中无模拟信号，不适用此检查项。"
+        },
+        {
+          "id": 15,
+          "category": "电路设计规范",
+          "level": "S",
+          "check_item": "跨时钟域调用IP检查",
+          "result": "✅ 通过",
+          "details": "无跨时钟域设计，不适用此检查项。"
+        }
+      ]
+    },
+    {
+      "stage_id": "STAGE_4_2",
+      "stage_name": "状态机与复位设计审查",
+      "status": "completed",
+      "check_items": [
+        {
+          "id": 16,
+          "category": "电路设计规范",
+          "level": "S",
+          "check_item": "状态机检查",
+          "result": "✅ 通过",
+          "details": "代码中无状态机，不适用此检查项。"
+        },
+        {
+          "id": 17,
+          "category": "电路设计规范",
+          "level": "S",
+          "check_item": "寄存器复位方式检查",
+          "result": "✅ 通过",
+          "details": "使用异步复位：'always @(posedge clk or posedge res)'，符合规范。"
+        },
+        {
+          "id": 18,
+          "category": "电路设计规范",
+          "level": "S",
+          "check_item": "寄存器复位值检查",
+          "result": "✅ 通过",
+          "details": "复位值为常量4'b1111，符合规范。"
+        },
+        {
+          "id": 19,
+          "category": "电路设计规范",
+          "level": "S",
+          "check_item": "多变量寄存器复位检查",
+          "result": "✅ 通过",
+          "details": "仅一个寄存器变量d，在复位时被赋值。"
+        },
+        {
+          "id": 20,
+          "category": "电路设计规范",
+          "level": "R",
+          "check_item": "复位信号逻辑检查",
+          "result": "✅ 通过",
+          "details": "不存在同步复位和异步复位信号的组合逻辑。"
+        },
+        {
+          "id": 21,
+          "category": "电路设计规范",
+          "level": "S",
+          "check_item": "复位信号使用前检查",
+          "result": "✅ 通过",
+          "details": "复位信号未跨时钟域使用，直接连接到异步复位端口。"
+        },
+        {
+          "id": 22,
+          "category": "电路设计规范",
+          "level": "R",
+          "check_item": "复位信号数量检查",
+          "result": "✅ 通过",
+          "details": "always块中仅有一个复位信号res。"
+        },
+        {
+          "id": 23,
+          "category": "电路设计规范",
+          "level": "R",
+          "check_item": "组合逻辑复位检查",
+          "result": "✅ 通过",
+          "details": "组合逻辑（assign y = d[0]）中无复位。"
+        },
+        {
+          "id": 24,
+          "category": "电路设计规范",
+          "level": "S",
+          "check_item": "复位条件写法检查",
+          "result": "✅ 通过",
+          "details": "复位后使用else if，代码结构为：if (res) begin ... end else begin ... end，符合规范。"
+        }
+      ]
+    },
+    {
+      "stage_id": "STAGE_4_3",
+      "stage_name": "变量与赋值检查",
+      "status": "completed",
+      "check_items": [
+        {
+          "id": 25,
+          "category": "电路设计规范",
+          "level": "S",
+          "check_item": "变量声明检查",
+          "result": "✅ 通过",
+          "details": "'reg [3:0] d;' 声明时未进行赋值，符合规范。"
+        },
+        {
+          "id": 26,
+          "category": "电路设计规范",
+          "level": "S",
+          "check_item": "变量声明冲突性检查",
+          "result": "✅ 通过",
+          "details": "仅有一个内部变量d，无命名冲突。"
+        },
+        {
+          "id": 27,
+          "category": "电路设计规范",
+          "level": "R",
+          "check_item": "变量赋值检查",
+          "result": "✅ 通过",
+          "details": "赋值语句中未使用X或Z。"
+        }
+      ]
+    },
+    {
+      "stage_id": "STAGE_4_4",
+      "stage_name": "Case与语句检查",
+      "status": "completed",
+      "check_items": [
+        {
+          "id": 28,
+          "category": "电路设计规范",
+          "level": "R",
+          "check_item": "Case语句检查",
+          "result": "✅ 通过",
+          "details": "代码中未使用casex语句。"
+        }
+      ]
+    },
+    {
+      "stage_id": "STAGE_4_5",
+      "stage_name": "时钟设计检查",
+      "status": "completed",
+      "check_items": [
+        {
+          "id": 29,
+          "category": "电路设计规范",
+          "level": "R",
+          "check_item": "时钟来源检查",
+          "result": "✅ 通过",
+          "details": "时钟clk是模块输入，来源于外部，非模块内部组合逻辑。"
+        },
+        {
+          "id": 30,
+          "category": "电路设计规范",
+          "level": "R",
+          "check_item": "时钟用途检查",
+          "result": "✅ 通过",
+          "details": "时钟仅用于always @(posedge clk)，未被当做数据用于赋值。"
+        },
+        {
+          "id": 31,
+          "category": "电路设计规范",
+          "level": "S",
+          "check_item": "时钟通路检查",
+          "result": "⚠️ 警告",
+          "details": "RTL级别无法验证时钟通路上的cell是否为clock专用cell，需在综合后的门级网表中检查。"
+        }
+      ]
+    },
+    {
+      "stage_id": "STAGE_4_6",
+      "stage_name": "逻辑运算检查",
+      "status": "completed",
+      "check_items": [
+        {
+          "id": 32,
+          "category": "电路设计规范",
+          "level": "R",
+          "check_item": "逻辑运算表达式检查",
+          "result": "✅ 通过",
+          "details": "未使用?作为常量进行匹配。"
+        },
+        {
+          "id": 33,
+          "category": "电路设计规范",
+          "level": "S",
+          "check_item": "逻辑运算表达式检查",
+          "result": "✅ 通过",
+          "details": "逻辑运算操作'd[3] ^ d[0]'中位宽匹配（均为1位），无位宽不匹配问题。"
+        },
+        {
+          "id": 34,
+          "category": "电路设计规范",
+          "level": "S",
+          "check_item": "算术运算表达式检查",
+          "result": "✅ 通过",
+          "details": "无算术运算，不适用此检查项。"
+        },
+        {
+          "id": 35,
+          "category": "电路设计规范",
+          "level": "S",
+          "check_item": "条件检查",
+          "result": "✅ 通过",
+          "details": "条件语句if (res)可以满足，无不满足的条件分支。"
+        },
+        {
+          "id": 36,
+          "category": "电路设计规范",
+          "level": "R",
+          "check_item": "逻辑运算表达式检查",
+          "result": "✅ 通过",
+          "details": "逻辑比较操作中未使用X或Z。"
+        },
+        {
+          "id": 37,
+          "category": "电路设计规范",
+          "level": "S",
+          "check_item": "条件检查",
+          "result": "✅ 通过",
+          "details": "条件语句if (res)中使用的是信号，未使用算术表达式。"
+        }
+      ]
+    },
+    {
+      "stage_id": "STAGE_4_7",
+      "stage_name": "变量声明检查",
+      "status": "completed",
+      "check_items": [
+        {
+          "id": 38,
+          "category": "电路设计规范",
+          "level": "S",
+          "check_item": "变量声明检查",
+          "result": "✅ 通过",
+          "details": "一行仅声明一个变量'reg [3:0] d;'，符合规范。"
+        },
+        {
+          "id": 39,
+          "category": "电路设计规范",
+          "level": "S",
+          "check_item": "变量声明检查",
+          "result": "✅ 通过",
+          "details": "变量声明时未进行赋值。"
+        }
+      ]
+    },
+    {
+      "stage_id": "STAGE_4_8",
+      "stage_name": "循环与条件检查",
+      "status": "completed",
+      "check_items": [
+        {
+          "id": 40,
+          "category": "电路设计规范",
+          "level": "R",
+          "check_item": "循环语句检查",
+          "result": "✅ 通过",
+          "details": "代码中无循环语句，不适用此检查项。"
+        },
+        {
+          "id": 41,
+          "category": "电路设计规范",
+          "level": "S",
+          "check_item": "for语句检查",
+          "result": "✅ 通过",
+          "details": "代码中无for循环，不适用此检查项。"
+        },
+        {
+          "id": 42,
+          "category": "电路设计规范",
+          "level": "S",
+          "check_item": "Case语句检查",
+          "result": "✅ 通过",
+          "details": "代码中无case语句，不适用此检查项。"
+        }
+      ]
+    }
+  ]
+}

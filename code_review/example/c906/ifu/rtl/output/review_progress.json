@@ -1,0 +1,86 @@
+{
+  "review_info": {
+    "target_files": "example/c906/ifu/rtl/*.v",
+    "total_files": 23,
+    "review_date": "2026-02-11",
+    "reviewer": "Verilog RTL Code Review Skill",
+    "version": "v1.4.3",
+    "review_type": "partial"
+  },
+  "review_scope": {
+    "stages_executed": [
+      "STAGE_2",
+      "STAGE_4"
+    ],
+    "stages_skipped": [
+      "STAGE_1",
+      "STAGE_3"
+    ],
+    "check_items_covered": 40,
+    "check_items_total": 42,
+    "coverage_percentage": 95.2
+  },
+  "stage_results": {
+    "STAGE_1": {
+      "status": "skipped",
+      "passed": 0,
+      "failed": 0,
+      "warning": 0,
+      "skipped": 1
+    },
+    "STAGE_2": {
+      "status": "completed",
+      "passed": 11,
+      "failed": 0,
+      "warning": 0,
+      "skipped": 0,
+      "description": "信号及模块命名规则审查"
+    },
+    "STAGE_3": {
+      "status": "skipped",
+      "passed": 0,
+      "failed": 0,
+      "warning": 0,
+      "skipped": 1
+    },
+    "STAGE_4": {
+      "status": "completed",
+      "passed": 29,
+      "failed": 0,
+      "warning": 0,
+      "skipped": 0,
+      "description": "电路设计规范审查",
+      "sub_stages": {
+        "STAGE_4_1": {"status": "completed", "passed": 2, "failed": 0, "warning": 0},
+        "STAGE_4_2": {"status": "completed", "passed": 9, "failed": 0, "warning": 0},
+        "STAGE_4_3": {"status": "completed", "passed": 3, "failed": 0, "warning": 0},
+        "STAGE_4_4": {"status": "completed", "passed": 1, "failed": 0, "warning": 0},
+        "STAGE_4_5": {"status": "completed", "passed": 3, "failed": 0, "warning": 0},
+        "STAGE_4_6": {"status": "completed", "passed": 6, "failed": 0, "warning": 0},
+        "STAGE_4_7": {"status": "completed", "passed": 2, "failed": 0, "warning": 0},
+        "STAGE_4_8": {"status": "completed", "passed": 3, "failed": 0, "warning": 0}
+      }
+    }
+  },
+  "summary": {
+    "total_passed": 40,
+    "total_failed": 0,
+    "total_warning": 0,
+    "total_skipped": 2,
+    "overall_status": "pass",
+    "notes": "所有已审查项目均通过规范检查，代码质量优秀"
+  },
+  "output_files": [
+    "output/reports/stage_2_naming.md",
+    "output/reports/stage_4_design/stage_4_1_analog_clock.md",
+    "output/reports/stage_4_design/stage_4_2_state_reset.md",
+    "output/reports/stage_4_design/stage_4_3_variable_assign.md",
+    "output/reports/stage_4_design/stage_4_4_case.md",
+    "output/reports/stage_4_design/stage_4_5_clock.md",
+    "output/reports/stage_4_design/stage_4_6_logic_op.md",
+    "output/reports/stage_4_design/stage_4_7_var_decl.md",
+    "output/reports/stage_4_design/stage_4_8_loop_cond.md",
+    "output/checklist_filled.md",
+    "output/final_summary.md"
+  ]
+}

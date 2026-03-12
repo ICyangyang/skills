@@ -1,0 +1,96 @@
+{
+  "name": "verilog_review",
+  "version": "1.2.0",
+  "description": "Verilog RTL代码审查工具 - 基于Verilog_RTL_Coding_Standards-v1.4.3规范进行代码审查",
+  "author": "Claude Code",
+  "workflow": "workflow.yaml",
+  "rules_db": "rules/verilog_standards.json",
+  "prompts_dir": "prompts",
+  "parameters": {
+    "category": {
+      "type": "string",
+      "description": "审查类别：all(全部), file_header(文件头), naming(命名), format(排版), design(电路设计)",
+      "default": "all",
+      "enum": [
+        "all", "file_header", "naming", "format", "design",
+        "stage_1", "stage_2", "stage_3", "stage_4",
+        "stage_4_1", "stage_4_2", "stage_4_3", "stage_4_4",
+        "stage_4_5", "stage_4_6", "stage_4_7", "stage_4_8"
+      ]
+    },
+    "keywords_mapping": {
+      "all": ["全部", "完整", "所有", "all"],
+      "file_header": ["文件头", "header", "文件信息"],
+      "naming": ["命名", "name", "信号名", "模块名", "变量名"],
+      "format": ["排版", "格式", "format", "缩进", "代码格式"],
+      "design": ["设计", "design", "电路", "电路设计", "逻辑设计"],
+      "stage_4_1": ["模拟", "时钟域", "跨时钟域"],
+      "stage_4_2": ["状态机", "复位", "reset", "state machine"],
+      "stage_4_3": ["变量", "赋值"],
+      "stage_4_4": ["case"],
+      "stage_4_5": ["时钟", "clock", "clk"],
+      "stage_4_6": ["逻辑运算", "算术运算"],
+      "stage_4_7": ["变量声明"],
+      "stage_4_8": ["循环", "条件"]
+    }
+  },
+  "stages": {
+    "STAGE_1": {
+      "name": "文件头审查",
+      "prompt": "prompts/stage_1_file_header.md"
+    },
+    "STAGE_2": {
+      "name": "信号及模块命名规则审查",
+      "prompt": "prompts/stage_2_naming.md"
+    },
+    "STAGE_3": {
+      "name": "排版规则审查",
+      "prompt": "prompts/stage_3_format.md"
+    },
+    "STAGE_4": {
+      "name": "电路设计规范审查",
+      "sub_stages": {
+        "STAGE_4_1": {
+          "name": "模拟与时钟设计审查",
+          "prompt": "prompts/stage_4_design/stage_4_1_analog_clock.md"
+        },
+        "STAGE_4_2": {
+          "name": "状态机与复位设计审查",
+          "prompt": "prompts/stage_4_design/stage_4_2_state_reset.md"
+        },
+        "STAGE_4_3": {
+          "name": "变量与赋值检查",
+          "prompt": "prompts/stage_4_design/stage_4_3_variable_assign.md"
+        },
+        "STAGE_4_4": {
+          "name": "Case与语句检查",
+          "prompt": "prompts/stage_4_design/stage_4_4_case.md"
+        },
+        "STAGE_4_5": {
+          "name": "时钟设计检查",
+          "prompt": "prompts/stage_4_design/stage_4_5_clock.md"
+        },
+        "STAGE_4_6": {
+          "name": "逻辑运算检查",
+          "prompt": "prompts/stage_4_design/stage_4_6_logic_op.md"
+        },
+        "STAGE_4_7": {
+          "name": "变量声明检查",
+          "prompt": "prompts/stage_4_design/stage_4_7_var_decl.md"
+        },
+        "STAGE_4_8": {
+          "name": "循环与条件检查",
+          "prompt": "prompts/stage_4_design/stage_4_8_loop_cond.md"
+        }
+      }
+    }
+  },
+  "output_format": {
+    "progress_file": "review_progress.json",
+    "checklist_file": "checklist_filled.md",
+    "reports_dir": "reports",
+    "final_summary": "final_summary.md"
+  },
+  "tools": ["Read", "Write", "Edit", "Grep", "Glob"],
+  "standards_version": "v1.4.3"
+}

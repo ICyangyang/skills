@@ -1,0 +1,79 @@
+{
+  "review_info": {
+    "file_path": "example/sigma_16p/sigma_16p.v",
+    "review_date": "2026-02-27",
+    "standard_version": "Verilog_RTL_Coding_Standards-v1.4.3",
+    "review_category": "all",
+    "is_full_review": true
+  },
+  "current_stage": "COMPLETED",
+  "completed_stages": [
+    "STAGE_1",
+    "STAGE_2",
+    "STAGE_3",
+    "STAGE_4_1",
+    "STAGE_4_2",
+    "STAGE_4_3",
+    "STAGE_4_4",
+    "STAGE_4_5",
+    "STAGE_4_6",
+    "STAGE_4_7",
+    "STAGE_4_8"
+  ],
+  "statistics": {
+    "total_checks": 45,
+    "completed_checks": 45,
+    "passed": 25,
+    "failed": 2,
+    "warnings": 2,
+    "not_applicable": 16,
+    "pass_rate": 86.2
+  },
+  "failed_checks": [
+    {
+      "id": 1,
+      "category": "文件头",
+      "check_item": "文件头内容检查",
+      "level": "R",
+      "description": "文件缺少文件头，直接以module声明开始"
+    },
+    {
+      "id": 6,
+      "category": "信号及模块命名规则",
+      "check_item": "多bit定义方式检查",
+      "level": "S",
+      "description": "多处使用升序位宽定义，应改为降序[N-1:0]"
+    }
+  ],
+  "warning_checks": [
+    {
+      "id": 18,
+      "category": "电路设计规范",
+      "check_item": "寄存器复位值检查",
+      "level": "S",
+      "description": "部分复位值缺少位宽声明"
+    },
+    {
+      "id": 34,
+      "category": "电路设计规范",
+      "check_item": "算术运算表达式检查",
+      "level": "S",
+      "description": "符号类型不明确，data_in按有符号处理但无signed声明"
+    }
+  ],
+  "output_files": {
+    "stage_1": "output/reports/stage_1_file_header.md",
+    "stage_2": "output/reports/stage_2_naming.md",
+    "stage_3": "output/reports/stage_3_format.md",
+    "stage_4_1": "output/reports/stage_4_design/stage_4_1_analog_clock.md",
+    "stage_4_2": "output/reports/stage_4_design/stage_4_2_state_reset.md",
+    "stage_4_3": "output/reports/stage_4_design/stage_4_3_variable_assign.md",
+    "stage_4_4": "output/reports/stage_4_design/stage_4_4_case.md",
+    "stage_4_5": "output/reports/stage_4_design/stage_4_5_clock.md",
+    "stage_4_6": "output/reports/stage_4_design/stage_4_6_logic_op.md",
+    "stage_4_7": "output/reports/stage_4_design/stage_4_7_var_decl.md",
+    "stage_4_8": "output/reports/stage_4_design/stage_4_8_loop_cond.md",
+    "checklist": "output/checklist_filled.md",
+    "summary": "output/final_summary.md"
+  }
+}

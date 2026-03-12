@@ -1,0 +1,183 @@
+mission:
+  name: "Verilog代码审查任务"
+  prompt:
+    system: |
+      你是一位资深的IC逻辑设计工程师，精通Verilog RTL编码规范。
+      你的任务是按照 Verilog_RTL_Coding_Standards-v1.4.3 规范，对Verilog代码进行分阶段审查。
+
+      **参数解析（审查类别）：**
+      1. 从用户输入中提取审查类别，存储为 {{REVIEW_CATEGORY}}
+      2. 默认值: "all" (完整审查)
+      3. 支持的表达方式：
+         - 明确指定: "只审查设计规范", "检查命名规则"
+         - 关键词: "文件头", "状态机", "时钟"等
+
+      **类别到阶段映射（从规则数据库获取）：**
+      all          → 执行 stage_1, stage_2, stage_3, stage_4 (全部)
+      file_header  → 执行 stage_1
+      naming       → 执行 stage_2
+      format       → 执行 stage_3
+      design       → 执行 stage_4 (全部8个子阶段)
+      stage_4_1    → 执行 stage_4_1 only
+      ... (其他子阶段类似)
+
+      **审查范围控制：**
+      - 根据 {{REVIEW_CATEGORY}} 确定要执行的 stage 列表
+      - 仅执行选定的 stage，跳过其他阶段
+      - 如果 {{REVIEW_CATEGORY}} == "all"，执行所有阶段（默认行为）
+
+      **类别关键词解析规则：**
+      - "文件头" / "header" → file_header
+      - "命名" / "name" / "信号名" → naming
+      - "排版" / "格式" / "format" → format
+      - "设计" / "design" / "电路" / "电路设计" → design
+      - "状态机" / "复位" / "reset" → stage_4_2
+      - "时钟" / "clock" / "clk" → stage_4_5
+      - 其他子阶段关键词参考 skill.json 中的 keywords_mapping
+
+      **输出路径规则（重要）：**
+      - 必须根据目标文件路径动态计算输出目录
+      - 输出目录 = 目标文件所在目录 + "/output/"
+      - 路径示例：
+        * 目标: example/uart_tx/*.v → 输出: example/uart_tx/output/
+        * 目标: example/audio_fir/*.v → 输出: example/audio_fir/output/
+        * 目标: example/IntegerDivider/*.v → 输出: example/IntegerDivider/output/
+      - 绝对禁止将输出文件写入项目根目录的 output/
+
+      **工作流程：**
+      1. 解析用户输入，确定 {{REVIEW_CATEGORY}}
+      2. 从规则数据库读取 category_mapping，确定要执行的 stage 列表
+      3. 仅执行选定的阶段，跳过其他阶段
+      4. 每完成一个阶段，将结果写入对应的 output 文件
+      5. 更新 review_progress.json 保存进度（包含审查范围信息）
+      6. 更新 checklist_filled.md 填表版本
+      7. 进入下一个选定的阶段
+
+      **输出要求：**
+      - 对通过的项目，说明为什么通过
+      - 对未通过的项目，给出：具体位置、原因、规范引用、修复建议
+      - 在 final_summary.md 中明确标注本次审查的类别和范围
+
+      **审查原则：**
+      - 严格按照 checklist.md 的 45 项检查项进行审查
+      - 每个检查项都要明确给出：通过 / 未通过 / 警告
+      - 对未通过项，必须给出代码位置和修复建议
+      - 审查过程要详细记录，确保可追溯
+
+      **部分审查特别说明：**
+      当 {{REVIEW_CATEGORY}} != "all" 时：
+      - 在输出文件开头标注 "⚠️ 部分审查：仅审查 [类别名称]"
+      - checklist_filled.md 只包含已审查的检查项
+      - final_summary.md 说明未审查的类别
+
+      现在开始审查！
+
+stage:
+  - name: file_header_review
+    desc: "文件头审查 [检查项1]"
+    execute_when: "{{REVIEW_CATEGORY}} in ['all', 'file_header', 'stage_1']"
+    prompt: "prompts/stage_1_file_header.md"
+    reference_files:
+      - "Verilog_RTL_Coding_Standards-v1.4.3/Verilog_RTL_Coding_Standards-v1.4.3.md"
+      - "Verilog_RTL_Coding_Standards-v1.4.3/checklist.md"
+      - "skills/verilog_review/rules/verilog_standards.json"
+    output_files:
+      - "{OUTPUT}/reports/stage_1_file_header.md"
+      - "{OUTPUT}/checklist_filled.md"
+      - "{OUTPUT}/review_progress.json"
+
+  - name: naming_convention_review
+    desc: "信号及模块命名规则审查 [检查项2-12]"
+    execute_when: "{{REVIEW_CATEGORY}} in ['all', 'naming', 'stage_2']"
+    prompt: "prompts/stage_2_naming.md"
+    reference_files:
+      - "Verilog_RTL_Coding_Standards-v1.4.3/Verilog_RTL_Coding_Standards-v1.4.3.md"
+      - "Verilog_RTL_Coding_Standards-v1.4.3/checklist.md"
+      - "skills/verilog_review/rules/verilog_standards.json"
+    output_files:
+      - "{OUTPUT}/reports/stage_2_naming.md"
+      - "{OUTPUT}/checklist_filled.md"
+      - "{OUTPUT}/review_progress.json"
+
+  - name: format_review
+    desc: "排版规则审查 [检查项13]"
+    execute_when: "{{REVIEW_CATEGORY}} in ['all', 'format', 'stage_3']"
+    prompt: "prompts/stage_3_format.md"
+    reference_files:
+      - "Verilog_RTL_Coding_Standards-v1.4.3/Verilog_RTL_Coding_Standards-v1.4.3.md"
+      - "Verilog_RTL_Coding_Standards-v1.4.3/checklist.md"
+      - "skills/verilog_review/rules/verilog_standards.json"
+    output_files:
+      - "{OUTPUT}/reports/stage_3_format.md"
+      - "{OUTPUT}/checklist_filled.md"
+      - "{OUTPUT}/review_progress.json"
+
+  - name: design_review
+    desc: "电路设计规范审查 [检查项14-45]"
+    execute_when: "{{REVIEW_CATEGORY}} in ['all', 'design', 'stage_4', 'stage_4_1', 'stage_4_2', 'stage_4_3', 'stage_4_4', 'stage_4_5', 'stage_4_6', 'stage_4_7', 'stage_4_8']"
+    reference_files:
+      - "Verilog_RTL_Coding_Standards-v1.4.3/Verilog_RTL_Coding_Standards-v1.4.3.md"
+      - "Verilog_RTL_Coding_Standards-v1.4.3/checklist.md"
+      - "skills/verilog_review/rules/verilog_standards.json"
+    output_files:
+      - "{OUTPUT}/reports/stage_4_design/"
+      - "{OUTPUT}/checklist_filled.md"
+      - "{OUTPUT}/review_progress.json"
+      - "{OUTPUT}/final_summary.md"
+    stage:
+      - name: analog_clock_review
+        desc: "模拟与时钟设计审查 [检查项14-15]"
+        execute_when: "{{REVIEW_CATEGORY}} in ['all', 'design', 'stage_4', 'stage_4_1']"
+        prompt: "prompts/stage_4_design/stage_4_1_analog_clock.md"
+        output_files:
+          - "{OUTPUT}/reports/stage_4_design/stage_4_1_analog_clock.md"
+
+      - name: state_reset_review
+        desc: "状态机与复位设计审查 [检查项16-24, 43-45]"
+        execute_when: "{{REVIEW_CATEGORY}} in ['all', 'design', 'stage_4', 'stage_4_2']"
+        prompt: "prompts/stage_4_design/stage_4_2_state_reset.md"
+        output_files:
+          - "{OUTPUT}/reports/stage_4_design/stage_4_2_state_reset.md"
+
+      - name: variable_assign_review
+        desc: "变量与赋值检查 [检查项25-27]"
+        execute_when: "{{REVIEW_CATEGORY}} in ['all', 'design', 'stage_4', 'stage_4_3']"
+        prompt: "prompts/stage_4_design/stage_4_3_variable_assign.md"
+        output_files:
+          - "{OUTPUT}/reports/stage_4_design/stage_4_3_variable_assign.md"
+
+      - name: case_review
+        desc: "Case与语句检查 [检查项28]"
+        execute_when: "{{REVIEW_CATEGORY}} in ['all', 'design', 'stage_4', 'stage_4_4']"
+        prompt: "prompts/stage_4_design/stage_4_4_case.md"
+        output_files:
+          - "{OUTPUT}/reports/stage_4_design/stage_4_4_case.md"
+
+      - name: clock_design_review
+        desc: "时钟设计检查 [检查项29-31]"
+        execute_when: "{{REVIEW_CATEGORY}} in ['all', 'design', 'stage_4', 'stage_4_5']"
+        prompt: "prompts/stage_4_design/stage_4_5_clock.md"
+        output_files:
+          - "{OUTPUT}/reports/stage_4_design/stage_4_5_clock.md"
+
+      - name: logic_op_review
+        desc: "逻辑运算检查 [检查项32-37]"
+        execute_when: "{{REVIEW_CATEGORY}} in ['all', 'design', 'stage_4', 'stage_4_6']"
+        prompt: "prompts/stage_4_design/stage_4_6_logic_op.md"
+        output_files:
+          - "{OUTPUT}/reports/stage_4_design/stage_4_6_logic_op.md"
+
+      - name: var_decl_review
+        desc: "变量声明检查 [检查项38-39]"
+        execute_when: "{{REVIEW_CATEGORY}} in ['all', 'design', 'stage_4', 'stage_4_7']"
+        prompt: "prompts/stage_4_design/stage_4_7_var_decl.md"
+        output_files:
+          - "{OUTPUT}/reports/stage_4_design/stage_4_7_var_decl.md"
+
+      - name: loop_cond_review
+        desc: "循环与条件检查 [检查项40-42]"
+        execute_when: "{{REVIEW_CATEGORY}} in ['all', 'design', 'stage_4', 'stage_4_8']"
+        prompt: "prompts/stage_4_design/stage_4_8_loop_cond.md"
+        output_files:
+          - "{OUTPUT}/reports/stage_4_design/stage_4_8_loop_cond.md"
+          - "{OUTPUT}/final_summary.md"
